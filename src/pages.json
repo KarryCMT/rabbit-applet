@@ -7,51 +7,17 @@
   },
   "pages": [
     {
-      "path": "pages/login/index",
+      "path": "pages/index/index",
       "style": {
-        "navigationBarTitleText": "登录",
+        "navigationBarTitleText": "首页",
         "disableScroll": true
       }
     }
   ],
-  "subPackages": [],
   "globalStyle": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "Stacy",
     "navigationBarBackgroundColor": "#ffffff",
     "backgroundColor": "#ffffff"
-  },
-  "tabBar": {
-    "color": "#7A7E83",
-    "selectedColor": "#3cc51f",
-    "borderStyle": "white",
-    "backgroundColor": "#ffffff",
-    "list": [
-      {
-        "pagePath": "pages/home/home/index",
-        "iconPath": "static/tabbar/listing.png",
-        "selectedIconPath": "static/tabbar/listing-select.png"
-      },
-      {
-        "pagePath": "pages/saved/index",
-        "iconPath": "static/tabbar/saved.png",
-        "selectedIconPath": "static/tabbar/saved-select.png"
-      },
-      {
-        "pagePath": "pages/notice/notice/index",
-        "iconPath": "static/tabbar/notification.png",
-        "selectedIconPath": "static/tabbar/notification-select.png"
-      },
-      {
-        "pagePath": "pages/handbook/handbook/index",
-        "iconPath": "static/tabbar/handbook.png",
-        "selectedIconPath": "static/tabbar/handbook-select.png"
-      },
-      {
-        "pagePath": "pages/listing/listing/index",
-        "iconPath": "static/tabbar/menu.png",
-        "selectedIconPath": "static/tabbar/menu-select.png"
-      }
-    ]
   }
 }

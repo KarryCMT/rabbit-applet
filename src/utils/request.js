@@ -41,12 +41,6 @@ class Request {
               icon: 'none',
               title: '登录过期，请重新登录',
             });
-            let timer = setTimeout(() => {
-              clearTimeout(timer);
-              uni.reLaunch({
-                url: `/base/login/index`,
-              });
-            }, 2000);
             uni.clearStorageSync();
             return Promise.reject(response);
           } else {

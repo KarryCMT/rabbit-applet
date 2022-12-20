@@ -1,8 +1,6 @@
 <template>
   <!-- 登录-引导 -->
   <view class="index-container">
-    <SSwiper/>
-    <SButton  />
     <view class="login-text">
       <text>登录账户</text>
     </view>
@@ -10,13 +8,9 @@
 </template>
 
 <script>
-import SButton from './components/SButton.vue';
-import SSwiper from './components/SSwiper.vue';
 export default {
   name:'Index',
   components: {
-    SButton,
-    SSwiper,
   },
   data() {
     return {
