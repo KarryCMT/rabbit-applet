@@ -12,6 +12,13 @@
         "navigationBarTitleText": "首页",
         "disableScroll": true
       }
+    },
+    {
+      "path": "pages/login/index",
+      "style": {
+        "navigationBarTitleText": "首页",
+        "disableScroll": true
+      }
     }
   ],
   "globalStyle": {
