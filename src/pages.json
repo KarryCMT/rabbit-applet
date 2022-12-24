@@ -54,6 +54,13 @@
         "navigationBarTitleText": "我的",
         "disableScroll": true
       }
+    },
+    {
+      "path": "pages/checkin/index",
+      "style": {
+        "navigationBarTitleText": "签到",
+        "disableScroll": true
+      }
     }
   ],
   "globalStyle": {
