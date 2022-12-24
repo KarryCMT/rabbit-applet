@@ -26,6 +26,34 @@
         "navigationBarTitleText": "首页",
         "disableScroll": true
       }
+    },
+    {
+      "path": "pages/meet/index",
+      "style": {
+        "navigationBarTitleText": "会议列表",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/doc/index",
+      "style": {
+        "navigationBarTitleText": "文档",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/contact/index",
+      "style": {
+        "navigationBarTitleText": "通讯录",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/mine/index",
+      "style": {
+        "navigationBarTitleText": "我的",
+        "disableScroll": true
+      }
     }
   ],
   "globalStyle": {
@@ -35,8 +63,8 @@
     "backgroundColor": "#EEEEF4"
   },
   "tabBar": {
-    "color": "#7A7E83",
-    "selectedColor": "#3cc51f",
+    "color": "#666",
+    "selectedColor": "#3474FF",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [
@@ -47,10 +75,28 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/index/index",
-        "iconPath": "static/tabbar/bar-1.png",
-        "selectedIconPath": "static/tabbar/bar-1-active.png",
-        "text": "首页"
+        "pagePath": "pages/meet/index",
+        "iconPath": "static/tabbar/bar-2.png",
+        "selectedIconPath": "static/tabbar/bar-2-active.png",
+        "text": "会议列表"
+      },
+      {
+        "pagePath": "pages/doc/index",
+        "iconPath": "static/tabbar/bar-3.png",
+        "selectedIconPath": "static/tabbar/bar-3-active.png",
+        "text": "文档"
+      },
+      {
+        "pagePath": "pages/contact/index",
+        "iconPath": "static/tabbar/bar-4.png",
+        "selectedIconPath": "static/tabbar/bar-4-active.png",
+        "text": "通讯录"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "iconPath": "static/tabbar/bar-5.png",
+        "selectedIconPath": "static/tabbar/bar-5-active.png",
+        "text": "我的"
       }
     ]
   }

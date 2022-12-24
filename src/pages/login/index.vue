@@ -1,7 +1,7 @@
 <template>
   <!-- 登录-引导 -->
-  <view class="index-container">
-    <image :src="logo" class="logo" mode="widthFix"></image>
+  <view class="login-container">
+    <image src="https://office-1255986722.cos.ap-chongqing.myqcloud.com/img/icon/logo-1.png" class="logo" mode="widthFix"></image>
     <view class="logo-title">EMOS企业在线办公系统</view>
     <view class="logo-subtitle">Ver 2050.2</view>
     <button class="login-btn" open-type="getUserInfo" @tap="login()">
@@ -15,13 +15,12 @@
 </template>
 
 <script>
-import logo from '@/static/logo-1.png';
 import { UserLogin } from '@/api';
 export default {
   name: 'OfLogin',
   components: {},
   data() {
-    return { logo };
+    return {  };
   },
   methods: {
     toRegister() {
@@ -56,7 +55,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.index-container {
+.login-container {
   width: 100%;
   height: 100%;
 

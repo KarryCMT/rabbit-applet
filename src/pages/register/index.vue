@@ -1,7 +1,7 @@
 <template>
   <!-- 注册 -->
-  <view class="index-container">
-    <image :src="logo" mode="widthFix" class="logo"></image>
+  <view class="registers-container">
+    <image src="https://office-1255986722.cos.ap-chongqing.myqcloud.com/img/icon/logo-2.png" mode="widthFix" class="logo"></image>
     <view class="register-container">
       <input
         type="text"
@@ -21,13 +21,12 @@
 </template>
 
 <script>
-import logo from '@/static/logo-2.png';
 import { UserRegister } from '@/api';
 export default {
   name: 'OfRegister',
   components: {},
   data() {
-    return { logo, registerCode: '' };
+    return { registerCode: '' };
   },
   methods: {
     register() {
@@ -59,10 +58,8 @@ export default {
               };
               const res = await UserRegister(data);
               if (res.code === 200) {
-                console.log(res,'响应数据');
                 let permission = res.permission;
                 uni.setStorageSync('permission', permission);
-                console.log(permission);
                 //跳转到index页面
                 uni.switchTab({
                   url: '/pages/index/index',
@@ -78,7 +75,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.index-container {
+.registers-container {
   width: 100%;
   height: 100%;
 
