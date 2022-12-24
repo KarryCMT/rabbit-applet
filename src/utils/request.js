@@ -1,4 +1,4 @@
-import { baseUrl } from "./config";
+import { baseUrl } from './config';
 class Request {
   /**
    * 内部的属性定义有：基础配置(config)、拦截器(interceptor)、请求方法表达式（get post put delete）
@@ -35,23 +35,29 @@ class Request {
           });
           return Promise.reject(response);
         }
-        if (response.statusCode !== 200) {
-          if (response.statusCode === 401 || response.statusCode === 403) {
-            uni.showToast({
-              icon: 'none',
-              title: '登录过期，请重新登录',
-            });
-            uni.clearStorageSync();
-            return Promise.reject(response);
-          } else {
-            uni.showToast({
-              icon: 'none',
-              title: response.data.message || '系统错误',
-            });
-            return Promise.reject(response);
+        if (response.statusCode === 401) {
+          uni.showToast({
+            icon: 'none',
+            title: '登录过期，请重新登录',
+          });
+          uni.redirectTo({
+            url: '/pages/login/index',
+          });
+          uni.clearStorageSync();
+        } else if (response.statusCode === 200 && response.data.code === 200) {
+          const data = response.data;
+          if (data.hasOwnProperty('token')) {
+            const token = data.token;
+            uni.setStorageSync('token', token);
           }
+          return response.data || {};
+        } else {
+          uni.showToast({
+            icon: 'none',
+            title: response.data || '系统错误',
+          });
+          return Promise.reject(response);
         }
-        return response.data || {};
       },
     };
 
@@ -60,7 +66,9 @@ class Request {
       return this.request({
         url,
         method: 'POST',
-        header:uni.getStorageSync('token')?{Authentication:`Bearer ${uni.getStorageSync('token')}`} : {},
+        header: uni.getStorageSync('token')
+          ? { token: uni.getStorageSync('token') }
+          : {},
         data,
       });
     };

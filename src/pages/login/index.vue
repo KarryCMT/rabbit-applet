@@ -16,32 +16,32 @@
 
 <script>
 import logo from '@/static/logo-1.png';
+import { UserLogin } from '@/api';
 export default {
-  name: 'Index',
+  name: 'OfLogin',
   components: {},
   data() {
     return { logo };
   },
   methods: {
-    toRegister: function () {
+    toRegister() {
       uni.navigateTo({
         url: '/pages/register/index',
       });
     },
-    login: function () {
-      let that = this;
+    login() {
       uni.login({
         provider: 'weixin',
-        success: (resp) => {
-          let code = resp.code;
-          that.ajax(that.url.login, 'POST', { code: code }, (resp) => {
-            let permission = resp.data.permission;
+        success: async ({ code }) => {
+          const res = await UserLogin({ code });
+          if (res.code === 200) {
+            let permission = res.permission;
             uni.setStorageSync('permission', permission);
             //跳转到登陆页面
             uni.switchTab({
-              url: '../index/index',
+              url: '/pages/index/index',
             });
-          });
+          }
         },
         fail: (e) => {
           uni.showToast({

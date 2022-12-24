@@ -22,22 +22,22 @@
 
 <script>
 import logo from '@/static/logo-2.png';
+import { UserRegister } from '@/api';
 export default {
-  name: 'Index',
+  name: 'OfRegister',
   components: {},
   data() {
     return { logo, registerCode: '' };
   },
   methods: {
     register() {
-      let that = this;
-      if (that.registerCode == null || that.registerCode.length == 0) {
+      if (this.registerCode == null || this.registerCode.length == 0) {
         uni.showToast({
           icon: 'none',
           title: '邀请码不能为空',
         });
         return;
-      } else if (/^[0-9]{6}$/.test(that.registerCode) == false) {
+      } else if (/^[0-9]{6}$/.test(this.registerCode) == false) {
         uni.showToast({
           icon: 'none',
           title: '邀请码必须是6位数字',
@@ -46,31 +46,28 @@ export default {
       }
       uni.login({
         provider: 'weixin',
-        success: (resp) => {
-          console.log(resp.code);
-          let code = resp.code;
+        success: ({ code }) => {
           uni.getUserInfo({
             provider: 'weixin',
-            success: (resp) => {
-              let nickName = resp.userInfo.nickName;
-              let avatarUrl = resp.userInfo.avatarUrl;
-              // console.log(nickName);
-              // console.log(avatarUrl);
+            success: async ({ userInfo }) => {
+              const { nickName, avatarUrl } = userInfo;
               let data = {
                 code: code,
                 nickname: nickName,
                 photo: avatarUrl,
-                registerCode: that.registerCode,
+                registerCode: this.registerCode,
               };
-              that.ajax(that.url.register, 'POST', data, (resp) => {
-                let permission = resp.data.permission;
+              const res = await UserRegister(data);
+              if (res.code === 200) {
+                console.log(res,'响应数据');
+                let permission = res.permission;
                 uni.setStorageSync('permission', permission);
                 console.log(permission);
                 //跳转到index页面
                 uni.switchTab({
-                  url: '../index/index',
+                  url: '/pages/index/index',
                 });
-              });
+              }
             },
           });
         },

@@ -1,41 +1,11 @@
-import {
-  BaseSendEmail,
-  decodeToken,
-  UserRegister,
-  UserLogin,
-  UserInfo,
-  RetrievePassword,
-  ExistsEmail,
-  QiniuUploadToken,
-  AreaTreeList,
-  JobTreeList,
-  UserLogout,
-  CreateRoom,
-  RoomPageList,
-  UploadFile,
-  CreateCollect,
-  GetWeChatCode,
-  GetRoomInfo,
-  GetCollectList,
+import http from '@/utils/request';
 
-} from './base';
+// 用户注册
+const UserRegister = (params) => http.post('/user/register', params);
+// 用户登录
+const UserLogin = (params) => http.post('/user/login', params);
+
 export {
-  BaseSendEmail,
-  ExistsEmail,
-  RetrievePassword,
-  decodeToken,
   UserRegister,
-  UserLogin,
-  UserInfo,
-  QiniuUploadToken,
-  AreaTreeList,
-  JobTreeList,
-  UserLogout,
-  CreateRoom,
-  RoomPageList,
-  UploadFile,
-  CreateCollect,
-  GetWeChatCode,
-  GetRoomInfo,
-  GetCollectList
+  UserLogin
 };

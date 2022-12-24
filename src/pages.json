@@ -9,7 +9,7 @@
     {
       "path": "pages/login/index",
       "style": {
-        "navigationBarTitleText": "登录",
+        "navigationBarTitleText": "欢迎使用在线办公系统",
         "disableScroll": true
       }
     },
@@ -27,12 +27,31 @@
         "disableScroll": true
       }
     }
-   
   ],
   "globalStyle": {
-    "navigationBarTextStyle": "black",
-    "navigationBarTitleText": "Stacy",
-    "navigationBarBackgroundColor": "#ffffff",
-    "backgroundColor": "#ffffff"
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "CoCo系统",
+    "navigationBarBackgroundColor": "#3474FF",
+    "backgroundColor": "#EEEEF4"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tabbar/bar-1.png",
+        "selectedIconPath": "static/tabbar/bar-1-active.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tabbar/bar-1.png",
+        "selectedIconPath": "static/tabbar/bar-1-active.png",
+        "text": "首页"
+      }
+    ]
   }
 }
