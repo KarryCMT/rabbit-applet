@@ -34,14 +34,34 @@ export default {
     return {
       photoPath: '',
       showImage: '',
-      btnText: '',
+      btnText: '拍照',
       canCheckin: false,
       showCamera: true,
     };
   },
   methods: {
-    clickBtn() {},
-    afresh() {},
+    clickBtn() {
+      const { btnText } = this;
+      if (btnText === '拍照') {
+        const ctx = uni.createCameraContext();
+        ctx.takePhoto({
+          quality: 'high',
+          success: (res) => {
+            this.photoPath = res.tempImagePath;
+            this.showCamera = false;
+            this.showImage = true;
+            this.btnText = '签到';
+          },
+        });
+      } else {
+      }
+    },
+    afresh() {
+      this.showCamera = true;
+      this.showImage = false;
+      this.photoPath = '';
+      this.btnText = '拍照';
+    },
     error() {},
   },
 };
