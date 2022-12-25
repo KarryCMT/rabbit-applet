@@ -54,7 +54,32 @@ export default {
           },
         });
       } else {
+        uni.showLoading({
+          title: '签到中请稍后',
+        });
+        setTimeout(() => {
+          uni.hideLoading();
+        }, 30000);
+        uni.getLocation({
+          type: 'wgs84',
+          success: ({ latitude, longitude }) => {
+            this.handleReverseGeocoder({ latitude, longitude });
+          },
+        });
       }
+    },
+    handleReverseGeocoder({ latitude, longitude }) {
+      this.QQMapWX.reverseGeocoder({
+        location: {
+          latitude,
+          longitude,
+        },
+        success: ({ result }) => {
+          const { address, address_component } = result;
+          const { nation, province, city, district } = address_component;
+          console.log(address_component, 'address_component');
+        },
+      });
     },
     afresh() {
       this.showCamera = true;
