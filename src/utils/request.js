@@ -23,12 +23,16 @@ class Request {
     this.interceptor = {
       // 请求拦截
       request(config) {
+        uni.showLoading({
+          title:"请求中..."
+        })
         config.data = config.data || {};
         return config;
       },
       // 响应拦截
       response(response) {
         if (response.errMsg && response.errMsg === 'request:fail ') {
+          uni.hideLoading()
           uni.showToast({
             icon: 'none',
             title: '网络错误',
@@ -36,6 +40,7 @@ class Request {
           return Promise.reject(response);
         }
         if (response.statusCode === 401) {
+          uni.hideLoading()
           uni.showToast({
             icon: 'none',
             title: '登录过期，请重新登录',
@@ -45,6 +50,7 @@ class Request {
           });
           uni.clearStorageSync();
         } else if (response.statusCode === 200 && response.data.code === 200) {
+          uni.hideLoading()
           const data = response.data;
           if (data.hasOwnProperty('token')) {
             const token = data.token;
@@ -52,6 +58,7 @@ class Request {
           }
           return response.data || {};
         } else {
+          uni.hideLoading()
           uni.showToast({
             icon: 'none',
             title: response.data || '系统错误',
