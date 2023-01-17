@@ -1,7 +1,8 @@
 <template>
   <!-- 首页 -->
   <view class="index-container">
-    首页
+    <text>首页</text>
+    <rb-dialog />
   </view>
 </template>
 
@@ -13,6 +14,12 @@ export default {
     return {
       unreadRows: 0,
     };
+  },
+  created(){
+    this.$request('rabbit.home.get',{data:{id:11}}).then(res=>{
+      console.log(res);
+      
+    })
   },
   methods: {
     toPage(name, url) {

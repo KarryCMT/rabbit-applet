@@ -62,10 +62,10 @@ class Request {
     };
 
     // post请求
-    this.post = (url, data = {}) => {
+    this.post = ({url,data,methods}) => {
       return this.request({
-        url,
-        method: 'POST',
+        url:`${url}`,
+        method: methods || 'POST',
         header: uni.getStorageSync('token')
           ? { token: uni.getStorageSync('token') }
           : {},

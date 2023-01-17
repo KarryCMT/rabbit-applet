@@ -10,3 +10,12 @@ node版本：v14
 
 生产环境打包：`` npm run build:mp-weixin ``
 
+## 全局组件
+1、已全局导入，无需引入即可使用。
+
+2、新增全局组件，在components文件夹创建一个目录，目录名称为rb-名称开头，其中rb-为前缀固定格式，其次再组件名称文件夹下面新建一个index.vue即可。
+
+3、使用方式:以rb-dialog为例： `` <rb-dialog /> `` 或者 `` <rb-dialog></rb-dialog> ``。
+
+## 网络请求
+

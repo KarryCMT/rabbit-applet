@@ -2,12 +2,12 @@
   "easycom": {
     "custom": {
       "autoscan": true,
-      "^s-(.*)": "@/components/s-$1/s-$1.vue"
+      "^rb-(.*)": "@/components/rb-$1/index.vue"
     }
   },
   "pages": [
     {
-      "path": "pages/index/index",
+      "path": "pages/home/index",
       "style": {
         "navigationBarTitleText": "首页",
         "disableScroll": true
@@ -23,7 +23,7 @@
   ],
   "globalStyle": {
     "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "CoCo系统",
+    "navigationBarTitleText": "rabbit",
     "navigationBarBackgroundColor": "#3474FF",
     "backgroundColor": "#EEEEF4"
   },
@@ -34,7 +34,7 @@
     "backgroundColor": "#ffffff",
     "list": [
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/home/index",
         "iconPath": "static/tabbar/bar-1.png",
         "selectedIconPath": "static/tabbar/bar-1-active.png",
         "text": "首页"

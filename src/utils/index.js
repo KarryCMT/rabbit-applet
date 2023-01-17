@@ -1,8 +1,13 @@
 import CryptoJS from "crypto-js";
+import{ default as $request, api, Request } from "./api";
+import io from "@/utils/lib/weapp.socket.io";
+import qqMap from "@/utils/lib/qqmap-wx-jssdk.min";
+import { baseUrl } from '@/utils/config';
 // 十六位十六进制数作为密钥
 const SECRET_KEY = CryptoJS.enc.Utf8.parse("1234123412341234");
 // 十六位十六进制数作为密钥偏移量
 const SECRET_IV = CryptoJS.enc.Utf8.parse("1234123412341234");
+
 
 /**
  * 加密方法
@@ -148,7 +153,6 @@ const deepMerge = (target = {}, source = {}) => {
 const generateUuid = () => {
   return Date.now()
 };
-
 export {
   timestampToTime,
   isArray,
@@ -157,5 +161,9 @@ export {
   formatTime,
   getDomHeight,
   generateUuid,
-  encrypt
+  encrypt,
+  $request, api, Request,
+  io,
+  qqMap,
+  baseUrl
 };
