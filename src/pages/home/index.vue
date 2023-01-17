@@ -16,9 +16,9 @@ export default {
     };
   },
   created(){
+    // 示例
     this.$request('rabbit.home.get',{data:{id:11}}).then(res=>{
       console.log(res);
-      
     })
   },
   methods: {

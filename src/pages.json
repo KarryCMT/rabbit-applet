@@ -21,6 +21,7 @@
       }
     }
   ],
+  "lazyCodeLoading": "requiredComponents",
   "globalStyle": {
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "rabbit",

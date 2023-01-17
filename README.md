@@ -17,5 +17,26 @@ node版本：v14
 
 3、使用方式:以rb-dialog为例： `` <rb-dialog /> `` 或者 `` <rb-dialog></rb-dialog> ``。
 
-## 网络请求
 
+## 网络请求
+注册对应模块API文件：
+/api/home/hone.js
+
+``  export default {
+  name: "rabbit.home",
+  api: {
+    // 首页
+    get: "/rabbit/user/list/get",
+  },
+};
+  ``
+
+使用：示例代码
+
+``
+created(){
+    this.$request('rabbit.home.get',{data:{id:11}}).then(res=>{
+      console.log(res);
+    })
+  }, 
+``
