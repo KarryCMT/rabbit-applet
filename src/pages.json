@@ -7,20 +7,6 @@
   },
   "pages": [
     {
-      "path": "pages/login/index",
-      "style": {
-        "navigationBarTitleText": "欢迎使用在线办公系统",
-        "disableScroll": true
-      }
-    },
-    {
-      "path": "pages/register/index",
-      "style": {
-        "navigationBarTitleText": "注册",
-        "disableScroll": true
-      }
-    },
-    {
       "path": "pages/index/index",
       "style": {
         "navigationBarTitleText": "首页",
@@ -28,37 +14,9 @@
       }
     },
     {
-      "path": "pages/meet/index",
-      "style": {
-        "navigationBarTitleText": "会议列表",
-        "disableScroll": true
-      }
-    },
-    {
-      "path": "pages/doc/index",
-      "style": {
-        "navigationBarTitleText": "文档",
-        "disableScroll": true
-      }
-    },
-    {
-      "path": "pages/contact/index",
-      "style": {
-        "navigationBarTitleText": "通讯录",
-        "disableScroll": true
-      }
-    },
-    {
       "path": "pages/mine/index",
       "style": {
         "navigationBarTitleText": "我的",
-        "disableScroll": true
-      }
-    },
-    {
-      "path": "pages/checkin/index",
-      "style": {
-        "navigationBarTitleText": "签到",
         "disableScroll": true
       }
     }
@@ -80,24 +38,6 @@
         "iconPath": "static/tabbar/bar-1.png",
         "selectedIconPath": "static/tabbar/bar-1-active.png",
         "text": "首页"
-      },
-      {
-        "pagePath": "pages/meet/index",
-        "iconPath": "static/tabbar/bar-2.png",
-        "selectedIconPath": "static/tabbar/bar-2-active.png",
-        "text": "会议列表"
-      },
-      {
-        "pagePath": "pages/doc/index",
-        "iconPath": "static/tabbar/bar-3.png",
-        "selectedIconPath": "static/tabbar/bar-3-active.png",
-        "text": "文档"
-      },
-      {
-        "pagePath": "pages/contact/index",
-        "iconPath": "static/tabbar/bar-4.png",
-        "selectedIconPath": "static/tabbar/bar-4-active.png",
-        "text": "通讯录"
       },
       {
         "pagePath": "pages/mine/index",
