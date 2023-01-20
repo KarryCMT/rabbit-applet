@@ -9,8 +9,7 @@
     {
       "path": "pages/home/index",
       "style": {
-        "navigationBarTitleText": "首页",
-        "disableScroll": true
+        "navigationBarTitleText": "首页"
       }
     },
     {

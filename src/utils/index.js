@@ -1,8 +1,12 @@
 import CryptoJS from "crypto-js";
 import{ default as $request, api, Request } from "./api";
 import io from "@/utils/lib/weapp.socket.io";
-import qqMap from "@/utils/lib/qqmap-wx-jssdk.min";
+import Map from "@/utils/lib/qqmap-wx-jssdk.min";
 import { baseUrl } from '@/utils/config';
+// 获取屏幕窗口高度
+const H = uni.getSystemInfoSync().windowHeight + 'px'
+//
+const qqMap = new Map({ key: '2M7BZ-XLTK3-XW436-3ZDTO-JT4K5-IVBZ4'});
 // 十六位十六进制数作为密钥
 const SECRET_KEY = CryptoJS.enc.Utf8.parse("1234123412341234");
 // 十六位十六进制数作为密钥偏移量
@@ -165,5 +169,6 @@ export {
   $request, api, Request,
   io,
   qqMap,
-  baseUrl
+  baseUrl,
+  H
 };

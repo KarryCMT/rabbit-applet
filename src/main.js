@@ -2,7 +2,7 @@ import Vue from 'vue';
 import App from './App';
 
 
-import { api, $request, io, qqMap,baseUrl } from '@/utils';
+import { api, $request, io, qqMap,baseUrl,H } from '@/utils';
 
 // 注册全局api
 const requireAll = (requireContext) =>
@@ -10,10 +10,10 @@ const requireAll = (requireContext) =>
 const apis = requireAll(require.context('@/api', true, /\.js$/));
 api ? api.install(apis) : '';
 
-Vue.prototype.QQMapWX = new qqMap({
-  key: '2M7BZ-XLTK3-XW436-3ZDTO-JT4K5-IVBZ4',
-});
+Vue.prototype.QQMapWX = qqMap
 Vue.prototype.$request = $request;
+
+Vue.prototype.$H = H;
 
 Vue.config.productionTip = false;
 

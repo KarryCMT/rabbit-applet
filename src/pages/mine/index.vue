@@ -1,16 +1,19 @@
 <template>
   <!-- 我的 -->
   <view class="rb-mine-container">
-    <view class="login-text">
-      <text>我的</text>
-    </view>
+    <header-info :item="{
+      title:'小狐狸不吃素',
+      time:'20:00',
+      coverImg:'https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/img/default.640d9a7.png'
+    }"/>
   </view>
 </template>
 
 <script>
+import HeaderInfo from './components/header-info.vue';
 export default {
   name: 'RbMine',
-  components: {},
+  components: {HeaderInfo},
   data() {
     return {};
   },
