@@ -1,6 +1,6 @@
 <template>
   <view class="mine-item-container">
-    <view class="items" v-for="(item, index) in tabsArr" :key="index">
+    <view class="items" @click="onItems(item)" v-for="(item, index) in tabsArr" :key="index">
       <view class="left-box">
         <image class="icon" :src="item.icon"></image>
         <text class="name">{{ item.name }}</text>
@@ -25,18 +25,28 @@ export default {
         {
           name: '我的消息',
           icon: messageIcon,
+          path:'/pages/message/index'
         },
         {
           name: '我的关注',
           icon: followIcon,
+          path:'/pages/follow/index'
         },
         {
           name: '我的草稿',
           icon: postIcon,
+          path:'/pages/draft/index'
         },
       ],
     };
   },
+  methods:{
+    onItems({path}){
+      uni.navigateTo({
+        url:path
+      })
+    }
+  }
 };
 </script>
 
@@ -63,8 +73,8 @@ export default {
       display: flex;
       align-items: center;
       .icon {
-        width: 55rpx;
-        height: 55rpx;
+        width: 75rpx;
+        height: 75rpx;
       }
       .name {
         margin-left: 20rpx;

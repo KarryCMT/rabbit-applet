@@ -40,6 +40,22 @@
         "navigationStyle": "custom",
         "disableScroll": false
       }
+    },
+    {
+      "path": "pages/follow/index",
+      "style": {
+        "navigationBarBackgroundColor": "#eecd50",
+        "navigationBarTitleText": "我的关注",
+        "disableScroll": false
+      }
+    },
+    {
+      "path": "pages/draft/index",
+      "style": {
+        "navigationBarBackgroundColor": "#eecd50",
+        "navigationBarTitleText": "我的草稿",
+        "disableScroll": false
+      }
     }
   ],
   "lazyCodeLoading": "requiredComponents",
