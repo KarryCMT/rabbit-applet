@@ -9,9 +9,15 @@
       :style="{ top: statusBarHeight + 'px', height: barHeight + 'px' }"
     >
       <view class="navbar-cont" :style="{ width: barWidth + 'px' }">
-        <view class="search-box" @click="onSearch">
+        <image class="back" :src="backIcon" @click="onBack"></image>
+        <view class="search-box">
           <image class="icon" :src="searchIcon"></image>
-          <text class="name">搜索你感兴趣的内容</text>
+          <input
+            @input="onInput"
+            class="input"
+            placeholder="搜索 圈子 搭子"
+            placeholder-class="placeholder-class"
+          />
         </view>
       </view>
     </view>
@@ -19,6 +25,7 @@
 </template>
 
 <script>
+import backIcon from '@/static/svg/back.svg';
 import searchIcon from '@/static/svg/search.svg';
 export default {
   props: {
@@ -29,6 +36,7 @@ export default {
   },
   data() {
     return {
+      backIcon,
       searchIcon,
       statusBarHeight: 20,
       barHeight: 44,
@@ -54,21 +62,20 @@ export default {
       },
     });
   },
-  methods:{
-    onSearch(){
-      uni.navigateTo({
-        url:'/pages/search/index'
-      })
-    }
-  }
+  methods: {
+    onBack() {
+      uni.navigateBack();
+    },
+    onInput(v) {
+      const { target } = v;
+      this.$emit('change', target.value || '');
+    },
+  },
 };
 </script>
 
 <style lang="scss">
 .navbar {
-  position: fixed;
-  left: 0;
-  right: 0;
   width: 100%;
   background: transparent;
 }
@@ -79,7 +86,6 @@ export default {
   right: 0;
   width: 100%;
   background-color: rgba(0, 0, 0, 0);
-  // height: var(--status-bar-height);
   z-index: 999;
 }
 .navbar-box {
@@ -95,10 +101,17 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
-
+    .back:active {
+      opacity: 0.5;
+    }
+    .back {
+      margin-left: 10rpx;
+      width: 40rpx;
+      height: 40rpx;
+    }
     .search-box {
       cursor: pointer;
-      margin-left: 20rpx;
+      margin-left: 10rpx;
       /* 矩形 1 */
       width: 80%;
       height: 60rpx;
@@ -113,12 +126,17 @@ export default {
         width: 40rpx;
         height: 40rpx;
       }
-      .name {
+      .input {
         margin-left: 20rpx;
         color: #666;
         font-size: 26rpx;
       }
     }
   }
+}
+.placeholder-class {
+  color: #b4b4b4;
+  font-size: 28rpx;
+  font-weight: 200;
 }
 </style>

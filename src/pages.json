@@ -33,6 +33,13 @@
         "navigationStyle": "custom",
         "disableScroll": false
       }
+    },
+    {
+      "path": "pages/search/index",
+      "style": {
+        "navigationStyle": "custom",
+        "disableScroll": false
+      }
     }
   ],
   "lazyCodeLoading": "requiredComponents",

@@ -1,17 +1,23 @@
 <template>
-  <view
-    class="navbar"
-    :style="{ height: statusBarHeight + barHeight + 'px', background }"
-  >
+  <view class="navbar" :style="{ height: statusBarHeight + barHeight + 'px' }">
     <view class="status-bar" :style="{ height: statusBarHeight + 'px' }"></view>
     <view
       class="navbar-box"
-      :style="{ top: statusBarHeight + 'px', height: barHeight + 'px' }"
+      :style="{
+        top: statusBarHeight + 'px',
+        height: barHeight + 'px',
+        opacity,
+      }"
     >
       <view class="navbar-cont" :style="{ width: barWidth + 'px' }">
+        <image class="icon" @click="onBack" :src="backIcon"></image>
         <view class="search-box">
-          <image class="icon" :src="searchIcon"></image>
-          <text class="name">搜索你感兴趣的内容</text>
+          <view class="left-box">
+            <image class="avatar" :src="avatar"></image>
+            <text class="name">李同学</text>
+          </view>
+
+          <view class="follow">关注</view>
         </view>
       </view>
     </view>
@@ -19,7 +25,7 @@
 </template>
 
 <script>
-import searchIcon from '@/static/svg/search.svg';
+import backIcon from '@/static/svg/back.svg';
 export default {
   props: {
     top: {
@@ -29,16 +35,23 @@ export default {
   },
   data() {
     return {
-      searchIcon,
+      backIcon,
       statusBarHeight: 20,
       barHeight: 44,
       barWidth: null,
-      background: null,
+      opacity: 1,
+      avatar:
+        'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
     };
   },
   watch: {
     top(v) {
-      this.background = `rgba(233,206,102,${v / 100})`;
+      this.opacity = 1 - `${v / 100}`;
+    },
+  },
+  methods: {
+    onBack() {
+      uni.navigateBack();
     },
   },
   mounted() {
@@ -57,11 +70,9 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .navbar {
-  position: fixed;
-  left: 0;
-  right: 0;
+  z-index: 9999;
   width: 100%;
   background: transparent;
 }
@@ -88,10 +99,14 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
-
+    .icon {
+      margin-left: 10rpx;
+      width: 40rpx;
+      height: 40rpx;
+    }
     .search-box {
       cursor: pointer;
-      margin-left: 20rpx;
+      margin-left: 10rpx;
       /* 矩形 1 */
       width: 80%;
       height: 60rpx;
@@ -101,15 +116,29 @@ export default {
 
       /* 底色灰 */
       background: rgb(246, 246, 246);
-      .icon {
-        margin-left: 20rpx;
-        width: 40rpx;
-        height: 40rpx;
+      justify-content: space-between;
+      .follow {
+        color: #c95552;
+        font-size: 24rpx;
+        border: 1px solid #c95552;
+        padding: 4rpx 15rpx;
+        border-radius: 60rpx;
+        margin-right: 20rpx;
       }
-      .name {
-        margin-left: 20rpx;
-        color: #666;
-        font-size: 26rpx;
+      .left-box {
+        display: flex;
+        align-items: center;
+        .name {
+          margin-left: 20rpx;
+          color: #666;
+          font-size: 26rpx;
+        }
+        .avatar {
+          margin-left: 20rpx;
+          width: 40rpx;
+          height: 40rpx;
+          border-radius: 50%;
+        }
       }
     }
   }
