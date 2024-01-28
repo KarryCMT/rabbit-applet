@@ -9,14 +9,29 @@
     {
       "path": "pages/home/index",
       "style": {
-        "navigationBarTitleText": "首页"
+        "navigationStyle": "custom"
       }
     },
     {
       "path": "pages/mine/index",
       "style": {
-        "navigationBarTitleText": "我的",
+        "navigationStyle": "custom",
         "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/publish/index",
+      "style": {
+        "navigationBarBackgroundColor": "#eecd50",
+        "navigationBarTitleText": "发布",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/detail/index",
+      "style": {
+        "navigationStyle": "custom",
+        "disableScroll": false
       }
     }
   ],
@@ -29,7 +44,7 @@
   },
   "tabBar": {
     "color": "#666",
-    "selectedColor": "#3474FF",
+    "selectedColor": "#eecd50",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [
@@ -37,7 +52,7 @@
         "pagePath": "pages/home/index",
         "iconPath": "static/tabbar/bar-1.png",
         "selectedIconPath": "static/tabbar/bar-1-active.png",
-        "text": "首页"
+        "text": "帖子"
       },
       {
         "pagePath": "pages/mine/index",

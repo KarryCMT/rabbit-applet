@@ -1,19 +1,24 @@
 <template>
   <!-- 我的 -->
   <view class="rb-mine-container">
-    <header-info :item="{
-      title:'小狐狸不吃素',
-      time:'20:00',
-      coverImg:'https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/img/default.640d9a7.png'
-    }"/>
+    <rb-navbar />
+    <view class="main-box">
+      <HeaderInfo />
+      <FuncMenu />
+      <MineItem />
+      <Version/>
+    </view>
   </view>
 </template>
 
 <script>
 import HeaderInfo from './components/header-info.vue';
+import FuncMenu from './components/func-menu.vue';
+import MineItem from './components/mine-item.vue';
+import Version from './components/version.vue';
 export default {
   name: 'RbMine',
-  components: {HeaderInfo},
+  components: { HeaderInfo,FuncMenu,MineItem,Version },
   data() {
     return {};
   },
@@ -25,5 +30,14 @@ export default {
 .rb-mine-container {
   width: 100%;
   height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgb(192, 209, 242),
+    rgba(115, 159, 248, 0.53) 46.662%,
+    rgba(37, 109, 255, 0) 95.045%
+  );
+  .main-box{
+    padding: 0 16rpx;
+  }
 }
 </style>
