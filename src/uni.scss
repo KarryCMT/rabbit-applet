@@ -1,12 +1,23 @@
 // 项目配置
 $font-color: #333;
 $desc-color: #999;
-$background-color: #3474FF;
-$background-color-active: #0052FF;
-$main-color: #0052FF;
+$background-color: #3474ff;
+$background-color-active: #0052ff;
+$main-color: #e4cf75;
 
 //
 .common {
-    padding: 0 20rpx;
-    box-sizing: border-box;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+}
+.txt-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.txt-overflow-more {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }

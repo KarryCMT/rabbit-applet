@@ -49,6 +49,7 @@ import HomeNavBar from './components/home-nav-bar.vue';
 import likeFill from '@/static/svg/like-fill.svg';
 import likeIcon from '@/static/svg/like-icon.svg';
 export default {
+  name:'RbHome',
   components: {
     HomeNavBar,
   },

@@ -20,7 +20,7 @@
       </view>
       <view class="content-bottom">
         <view>
-          <text v-if="isUnfold" class="unfold" @tap="onUnfold(item)">展开</text>
+          <text v-if="isUnfold" class="unfold" @tap="onUnfold(item)">展开({{ item.children.length }})</text>
           <text
             class="time"
             :style="{ 'margin-left': !isUnfold ? '0rpx;' : '20rpx;' }"

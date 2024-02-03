@@ -37,6 +37,7 @@ export default {
   z-index: 99;
   left: 0;
   right: 0;
+  background-color: #fff;
   padding-bottom: env(safe-area-inset-bottom);
   display: flex;
   align-items: center;

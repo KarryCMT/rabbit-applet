@@ -20,7 +20,7 @@
 <script>
 import deleteIcon from '@/static/svg/delete.svg';
 export default {
-  name: 'DgFollow',
+  name: 'DgDraft',
   components: {},
   data() {
     return {

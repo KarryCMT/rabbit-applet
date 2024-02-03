@@ -1,7 +1,7 @@
 <template>
   <!-- 我的 -->
   <view class="publish-container">
-    <CoverBox />
+    <CoverBox ref="CoverBoxRef"/>
     <view class="form-box">
       <view class="title-form-box">
         <input
@@ -12,19 +12,18 @@
           :placeholder-style="placeholderStyle"
         />
       </view>
-      <TopicBox />
+      <TopicBox @change="onTopicChange"/>
       <view class="body-form-box">
         <textarea
-          auto-height
-          class="textarea"
-          maxlength="500"
+          cursor-spacing="200"
+          maxlength="300"
           placeholder="请输入正文"
           v-model="formDate.content"
-          :placeholder-style="placeholderStyle"
+          placeholder-style="color: #b9b9b9;font-size: 30rpx;font-weight: 200;"
         />
       </view>
     </view>
-    <FooterBox @publish="onPublish"/>
+    <FooterBox @publish="onPublish" />
   </view>
 </template>
 
@@ -49,28 +48,36 @@ export default {
       placeholderStyle: `
         color: #b9b9b9;
         font-size: 28rpx;
-        font-weight: 100;
+        font-weight: 200;
         `,
     };
   },
   methods: {
-    onPublish(){
+    onPublish() {
       uni.switchTab({
-        url:'/pages/home/index'
-      })
-    }
+        url: '/pages/home/index',
+      });
+    },
+    onTopicChange(arr){
+      console.log('onTopicChange',arr);
+
+    },
   },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .publish-container {
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   .form-box {
+    flex: 1;
     padding: 20rpx;
-    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
     .title-form-box {
       width: 100%;
       height: 80rpx;
@@ -84,22 +91,15 @@ export default {
       }
     }
     .body-form-box {
-      height: 900rpx;
+      flex: 1;
       margin-top: 20rpx;
-      .textarea {
+      textarea {
         color: #353535;
         line-height: 50rpx;
-        font-size: 28rpx;
         width: 100%;
-        height: 100% !important;
-        overflow: scroll;
+        height: 500rpx;
       }
     }
   }
-}
-.placeholder-class {
-  color: #b4b4b4;
-  font-size: 28rpx;
-  font-weight: 200;
 }
 </style>

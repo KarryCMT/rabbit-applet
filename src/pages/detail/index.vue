@@ -55,7 +55,7 @@ import BodyBox from './components/body-box.vue';
 import FooterBox from './components/footer-box.vue';
 import CommentBox from './components/comment-box.vue';
 export default {
-  name: 'RbMine',
+  name: 'RbDetail',
   components: {
     TitleBox,
     BodyBox,

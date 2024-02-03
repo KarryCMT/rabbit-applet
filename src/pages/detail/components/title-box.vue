@@ -1,10 +1,9 @@
 <!-- 瀑布流布局 -->
 <template>
-  <view>
-    <view class="title-box">
-      <text class="name">习近平同法国总统马克龙互致贺电习近平同法国总统马克龙互致贺电</text>
-    </view>
-
+  <view class="title-box">
+    <text class="name"
+      >习近平同法国总统马克龙互致贺电习近平同法国总统马克龙互致贺电</text
+    >
   </view>
 </template>
 
@@ -29,7 +28,7 @@ export default {
 .title-box {
   width: 100%;
   border-left: 8px solid $main-color;
-  padding:0 20rpx;
+  padding: 0 20rpx;
   box-sizing: border-box;
   .name {
     display: flex;
@@ -40,5 +39,4 @@ export default {
     word-spacing: 20rpx;
   }
 }
-
 </style>
