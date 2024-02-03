@@ -1,7 +1,7 @@
 <!-- 瀑布流布局 -->
 <template>
   <view class="detail-footer-Box">
-    <view class="input-box">
+    <view class="input-box" @tap="onComment">
       <image class="icon" :src="createIcon"></image>
       <text class="txt">评论一下</text>
     </view>
@@ -48,7 +48,11 @@ export default {
   },
   onLoad() {},
   computed: {},
-  methods: {},
+  methods: {
+    onComment(){
+      this.$emit('comment',null,false)
+    }
+  },
 };
 </script>
 

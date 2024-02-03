@@ -10,9 +10,9 @@
 
 <script>
 import commentIcon from '@/static/svg/comment-icon.svg';
-import collectIcon from "@/static/svg/collect-icon.svg";
-import postIcon from "@/static/svg/post-icon.svg";
-import viewIcon from "@/static/svg/view-icon.svg";
+import collectIcon from '@/static/svg/collect-icon.svg';
+import postIcon from '@/static/svg/post-icon.svg';
+import viewIcon from '@/static/svg/view-icon.svg';
 export default {
   name: 'FuncMenu',
   data() {
@@ -58,13 +58,16 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    user-select: none;
     .icon {
       width: 90rpx;
       height: 90rpx;
+      user-select: none;
     }
     .name {
       margin-top: 5rpx;
       font-size: 26rpx;
+      user-select: none;
       color: #333;
     }
   }

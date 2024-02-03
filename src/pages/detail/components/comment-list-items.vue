@@ -11,32 +11,44 @@
         <view v-if="item.isAuthor" class="author">作者</view>
       </view>
       <view class="body">
-        <text v-if="item.replyName" class="is-reply">回复</text>
+        <text v-if="item.replyName" @tap="onReply(item)" class="is-reply">回复</text>
         <text v-if="item.replyName" class="reply-name">{{
           item.replyName
         }}</text>
         <text v-if="item.replyName" class="text">: {{ item.content }}</text>
         <text v-if="!item.replyName" class="text">{{ item.content }}</text>
-        <text class="time">{{ formatTime(item.time) }}</text>
-        <text class="city">{{ item.city }}</text>
-        <text class="reply">回复</text>
+      </view>
+      <view class="content-bottom">
+        <view>
+          <text v-if="isUnfold" class="unfold" @tap="onUnfold(item)">展开</text>
+          <text
+            class="time"
+            :style="{ 'margin-left': !isUnfold ? '0rpx;' : '20rpx;' }"
+            >{{ formatTime(item.time) }}</text
+          >
+          <text class="city">{{ item.city }}</text>
+        </view>
       </view>
     </view>
     <view class="like">
-      <image class="icon" :src="likeIcon"></image>
-      <text class="txt">{{ item.likeCount }}</text>
+      <text> 1 楼 </text>
+      <text class="reply"  @tap="onReply(item)">回复</text>
     </view>
   </view>
 </template>
 
 <script>
 import likeIcon from '@/static/svg/like.svg';
-import { formatTime } from "@/utils/index.js";
+import { formatTime } from '@/utils/index.js';
 export default {
   props: {
     item: {
       type: Object,
       default: () => {},
+    },
+    isUnfold: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
@@ -48,6 +60,12 @@ export default {
   computed: {},
   methods: {
     formatTime,
+    onUnfold(row) {
+      this.$emit('unfold', row);
+    },
+    onReply(row){
+      this.$emit('reply', row);
+    }
   },
 };
 </script>
@@ -106,8 +124,18 @@ export default {
         color: #343434;
         font-size: 26rpx;
       }
+    }
+    .content-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .unfold {
+        color: #1d1d1d;
+        font-size: 26rpx;
+        font-weight: 300;
+      }
       .time {
-        margin-left: 10rpx;
+        margin-left: 20rpx;
         color: #cacaca;
         font-size: 26rpx;
         font-weight: 300;
@@ -118,14 +146,8 @@ export default {
         font-size: 26rpx;
         font-weight: 300;
       }
-      .reply {
-        cursor: pointer;
-        margin-left: 10rpx;
-        color: #8c8c8c;
-        font-size: 26rpx;
-        font-weight: 300;
-      }
-      .reply:active {
+
+      .unfold:active {
         opacity: 0.5;
       }
     }
@@ -134,14 +156,17 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    .icon {
-      width: 40rpx;
-      height: 40rpx;
+    justify-content: space-between;
+    font-size: 26rpx;
+    color: #8c8c8c;
+    .reply {
+      cursor: pointer;
       color: #8c8c8c;
-    }
-    .txt {
       font-size: 26rpx;
-      color: #8c8c8c;
+      font-weight: 300;
+    }
+    .reply:active {
+      opacity: 0.5;
     }
   }
 }

@@ -24,7 +24,7 @@
         />
       </view>
     </view>
-    <FooterBox />
+    <FooterBox @publish="onPublish"/>
   </view>
 </template>
 
@@ -54,6 +54,11 @@ export default {
     };
   },
   methods: {
+    onPublish(){
+      uni.switchTab({
+        url:'/pages/home/index'
+      })
+    }
   },
 };
 </script>
