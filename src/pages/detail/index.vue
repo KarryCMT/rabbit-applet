@@ -33,6 +33,8 @@
           >
           <view class="input">
             <textarea
+              placeholder-style="color:#ccc;font-weight:200;font-size:28rpx;"
+              cursor-spacing="200"
               maxlength="300"
               placeholder="请勿回复违规内容，平台会进行审核"
             ></textarea>

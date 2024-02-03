@@ -43,15 +43,12 @@ export default {
 
 <style lang="scss">
 .func-menu-container {
-  /* 矩形 940 */
   width: 100%;
-  height: 186rpx;
-  border-radius: 12rpx;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  /* 白色 */
-  background: rgb(255, 255, 255);
+  height: 166rpx;
+  background: #fff;
   display: flex;
   justify-content: space-around;
+  border-bottom: 24rpx solid #f6f6f6;
   .menu-items {
     cursor: pointer;
     display: flex;
@@ -66,9 +63,10 @@ export default {
     }
     .name {
       margin-top: 5rpx;
-      font-size: 26rpx;
+      font-size: 30rpx;
+      font-weight: 400;
       user-select: none;
-      color: #333;
+      color: #252525;
     }
   }
 }

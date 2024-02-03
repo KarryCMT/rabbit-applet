@@ -43,6 +43,7 @@ export default {
   width: 100%;
   height: 200rpx;
   box-sizing: border-box;
+  padding: 0 20rpx;
   align-items: center;
   justify-content: space-between;
   .left-box {

@@ -1,20 +1,29 @@
 <template>
   <view class="mine-item-container">
-    <view class="items" @click="onItems(item)" v-for="(item, index) in tabsArr" :key="index">
+    <view
+      class="items"
+      @click="onItems(item)"
+      v-for="(item, index) in tabsArr"
+      :key="index"
+    >
       <view class="left-box">
         <image class="icon" :src="item.icon"></image>
         <text class="name">{{ item.name }}</text>
       </view>
-      <image class="right" :src="rightIcon"></image>
+      <view class="right-box">
+        <text class="text">{{ item.text }}</text>
+        <image class="icon" :src="rightIcon"></image>
+      </view>
     </view>
   </view>
 </template>
 
 <script>
-import rightIcon from '@/static/svg/right-icon.svg';
-import followIcon from '@/static/svg/follow.svg';
-import messageIcon from '@/static/svg/message.svg';
-import postIcon from '@/static/svg/post.svg';
+import rightIcon from '@/static/svg/right.svg';
+import followIcon from '@/static/svg/collection.svg';
+import messageIcon from '@/static/svg/messages.svg';
+import postIcon from '@/static/svg/suggestion.svg';
+import promptIcon from '@/static/svg/prompt.svg';
 export default {
   name: 'mine-item',
   props: {},
@@ -25,56 +34,60 @@ export default {
         {
           name: '我的消息',
           icon: messageIcon,
-          path:'/pages/message/index'
+          path: '/pages/message/index',
         },
         {
           name: '我的关注',
           icon: followIcon,
-          path:'/pages/follow/index'
+          path: '/pages/follow/index',
         },
         {
           name: '我的草稿',
           icon: postIcon,
-          path:'/pages/draft/index'
+          path: '/pages/draft/index',
+        },
+        {
+          name: '关于',
+          icon: promptIcon,
+          text:'v1.0.0',
+          path: '/pages/about/index',
         },
       ],
     };
   },
-  methods:{
-    onItems({path}){
+  methods: {
+    onItems({ path }) {
       uni.navigateTo({
-        url:path
-      })
-    }
-  }
+        url: path,
+      });
+    },
+  },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .mine-item-container {
-  margin-top: 17rpx;
   display: flex;
   width: 100%;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
   /* 矩形 941 */
   flex-direction: column;
-  border-radius: 12rpx;
 
+  border-bottom: 20rpx solid #f6f6f6;
   /* 白色 */
-  background: rgb(255, 255, 255);
+  background: #fff;
   .items {
     display: flex;
     height: 100rpx;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #E6E6E6;
+    border-bottom: 1px solid #f9f9f9;
     padding: 0 16rpx;
     .left-box {
       display: flex;
       align-items: center;
       .icon {
-        width: 75rpx;
-        height: 75rpx;
+        width: 55rpx;
+        height: 55rpx;
       }
       .name {
         margin-left: 20rpx;
@@ -82,14 +95,25 @@ export default {
         font-size: 28rpx;
       }
     }
-    .right {
-      width: 40rpx;
-      height: 40rpx;
-      color: #999;
+    .right-box{
+      display: flex;
+      align-items: center;
+      .text{
+        font-size: 28rpx;
+        color: #bababa;
+      }
+      .icon {
+      width: 30rpx;
+      height: 27rpx;
     }
+    }
+
   }
-  .items:last-child{
+  .items:last-child {
     border-bottom: none;
+  }
+  .items:active{
+    opacity: .5;
   }
 }
 </style>

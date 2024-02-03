@@ -6,7 +6,6 @@
       <HeaderInfo />
       <FuncMenu />
       <MineItem />
-      <Version/>
     </view>
   </view>
 </template>
@@ -15,10 +14,9 @@
 import HeaderInfo from './components/header-info.vue';
 import FuncMenu from './components/func-menu.vue';
 import MineItem from './components/mine-item.vue';
-import Version from './components/version.vue';
 export default {
   name: 'RbMine',
-  components: { HeaderInfo,FuncMenu,MineItem,Version },
+  components: { HeaderInfo,FuncMenu,MineItem },
   data() {
     return {};
   },
@@ -30,14 +28,8 @@ export default {
 .rb-mine-container {
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    180deg,
-    rgb(192, 209, 242),
-    rgba(115, 159, 248, 0.53) 46.662%,
-    rgba(37, 109, 255, 0) 95.045%
-  );
+  background: #fff;
   .main-box{
-    padding: 0 16rpx;
   }
 }
 </style>
