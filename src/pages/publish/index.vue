@@ -1,26 +1,32 @@
 <template>
   <!-- 我的 -->
   <view class="publish-container">
-    <CoverBox ref="CoverBoxRef"/>
+    <CoverBox ref="CoverBoxRef" />
     <view class="form-box">
       <view class="title-form-box">
         <input
           class="input"
           maxlength="20"
           placeholder="请输入标题"
-          v-model="formDate.title"
+          v-model="modelForm.title"
           :placeholder-style="placeholderStyle"
         />
       </view>
-      <TopicBox @change="onTopicChange"/>
+      <TopicBox @change="onTopicChange" />
       <view class="body-form-box">
         <textarea
           cursor-spacing="200"
           maxlength="300"
           placeholder="请输入正文"
-          v-model="formDate.content"
+          v-model="modelForm.content"
           placeholder-style="color: #b9b9b9;font-size: 30rpx;font-weight: 200;"
         />
+      </view>
+      <view class="topic-box">
+        <view class="items" v-for="item in TopicArr" :key="item.id">
+          <image class="icon" :src="messageTopicIcon"></image>
+          <text class="name">{{ item.name }}</text>
+        </view>
       </view>
     </view>
     <FooterBox @publish="onPublish" />
@@ -31,6 +37,7 @@
 import CoverBox from './components/cover-box.vue';
 import FooterBox from './components/footer-box.vue';
 import TopicBox from './components/topic-box.vue';
+import messageTopicIcon from '@/static/svg/message-topic.svg';
 export default {
   name: 'DgPublish',
   components: {
@@ -41,9 +48,15 @@ export default {
 
   data() {
     return {
-      formDate: {
+      messageTopicIcon,
+      TopicArr: [],
+      modelForm: {
+        userId: '100',
+        topicId: '100',
         title: '',
         content: '',
+        pictures: '',
+        remark: '',
       },
       placeholderStyle: `
         color: #b9b9b9;
@@ -54,13 +67,21 @@ export default {
   },
   methods: {
     onPublish() {
-      uni.switchTab({
-        url: '/pages/home/index',
-      });
+      this.onCreate();
     },
-    onTopicChange(arr){
-      console.log('onTopicChange',arr);
-
+    // 创建API
+    onCreate() {
+      this.$request('dragon.post.create', { data: { ...this.modelForm } }).then(
+        (res) => {
+          uni.switchTab({
+            url: '/pages/home/index',
+          });
+        }
+      );
+    },
+    // 选择的话题
+    onTopicChange(arr) {
+      this.TopicArr = arr;
     },
   },
 };
@@ -98,6 +119,31 @@ export default {
         line-height: 50rpx;
         width: 100%;
         height: 500rpx;
+      }
+    }
+    .topic-box {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: -15rpx;
+      margin-top: -15rpx;
+      .items {
+        margin-top: 15rpx;
+        margin-left: 15rpx;
+        display: flex;
+        align-items: center;
+        background: #e6e6e6;
+        border-radius: 50rpx;
+        padding: 5rpx 20rpx;
+        box-sizing: border-box;
+        .icon {
+          width: 30rpx;
+          height: 30rpx;
+        }
+        .name {
+          margin-left: 5rpx;
+          color: #333;
+          font-size: 26rpx;
+        }
       }
     }
   }

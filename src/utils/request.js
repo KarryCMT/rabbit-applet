@@ -31,7 +31,7 @@ class Request {
       },
       // 响应拦截
       response(response) {
-        if (response.errMsg && response.errMsg === 'request:fail ') {
+        if (response.errMsg && response.errMsg === 'request:fail') {
           uni.hideLoading()
           uni.showToast({
             icon: 'none',
@@ -39,7 +39,7 @@ class Request {
           });
           return Promise.reject(response);
         }
-        if (response.statusCode === 401) {
+        if (response.data.statusCode === 601) {
           uni.hideLoading()
           uni.showToast({
             icon: 'none',
@@ -49,7 +49,7 @@ class Request {
             url: '/pages/login/index',
           });
           uni.clearStorageSync();
-        } else if (response.statusCode === 200 && response.data.code === 200) {
+        } else if (response.data.statusCode === 600) {
           uni.hideLoading()
           const data = response.data;
           if (data.hasOwnProperty('token')) {
@@ -61,7 +61,7 @@ class Request {
           uni.hideLoading()
           uni.showToast({
             icon: 'none',
-            title: response.data || '系统错误',
+            title: response.data.message || '系统错误',
           });
           return Promise.reject(response);
         }
@@ -74,7 +74,7 @@ class Request {
         url:`${url}`,
         method: methods || 'POST',
         header: uni.getStorageSync('token')
-          ? { token: uni.getStorageSync('token') }
+          ? { Authorization: uni.getStorageSync('token') }
           : {},
         data,
       });
