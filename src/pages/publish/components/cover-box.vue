@@ -18,7 +18,7 @@
         :src="item.url"
       ></image>
     </view>
-    <view class="items" @click="onPush">
+    <view class="items" @click="onChooseImage">
       <image class="add-icon" :src="addIcon"></image>
     </view>
   </view>
@@ -27,35 +27,68 @@
 <script>
 import addIcon from '@/static/svg/add.svg';
 import closeIcon from '@/static/svg/close.svg';
+import { uploadUrl } from '@/utils/config.js';
 export default {
   data() {
     return {
       closeIcon,
       isCurrentLongPress: false, // 是否长按
       addIcon,
-      fileList: [
-        {
-          name: '图片',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-      ],
+      fileList: [],
     };
   },
   methods: {
     // 删除
     onClose(index) {
-        this.fileList.splice(index, 1);
+      this.fileList.splice(index, 1);
     },
-    onPush() {
+    // 选择图片
+    onChooseImage() {
       this.isCurrentLongPress = false;
-      this.fileList = [
-        ...this.fileList,
-        {
-          name: '图片',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
+      uni.chooseImage({
+        count: 1, //默认9
+        sizeType: ['original', 'compressed'], //可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album'], //从相册选择
+        success: (res) => {
+          const tempFilePaths = res.tempFilePaths;
+          this.onUploadImage({
+            filePath: tempFilePaths[0],
+            Authorization: `Bearer ${uni.getStorageSync('Authorization')}`,
+          });
         },
-      ];
+      });
     },
+    // 上传图片
+    onUploadImage({ filePath, Authorization }) {
+      console.log('🚀🚀~filePath', filePath);
+      console.log('🚀🚀~Authorization', Authorization);
+
+      uni.uploadFile({
+        url: uploadUrl, //仅为示例，非真实的接口地址
+        filePath,
+        header: {
+          Authorization,
+          'Content-type': 'multipart/form-data', // 则以 formData 方式传参
+        }, // 可以加access_token等
+        name: 'file',
+        success: (res) => {
+          console.log('上传图片', res);
+          if (res.statusCode === 600) {
+            this.fileList = [
+              ...this.fileList,
+              {
+                name: '图片',
+                url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
+              },
+            ];
+          }
+        },
+        fail: (err) => {
+          console.log('🚀🚀~err', err);
+        },
+      });
+    },
+
     onLongPress(v) {
       this.isCurrentLongPress = !this.isCurrentLongPress;
       console.log(this.isCurrentLongPress);

@@ -31,11 +31,11 @@ class Request {
       },
       // 响应拦截
       response(response) {
-        if (response.errMsg && response.errMsg === 'request:fail') {
+        if (response.errMsg && response.errMsg === 'request:fail ') {
           uni.hideLoading()
           uni.showToast({
             icon: 'none',
-            title: '网络错误',
+            title: '网络请求错误，请重试',
           });
           return Promise.reject(response);
         }

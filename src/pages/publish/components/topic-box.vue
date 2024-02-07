@@ -5,8 +5,8 @@
         v-for="(item, index) in topicList"
         :key="item.id"
         :class="[item.isCheck ? 'items select-items' : 'items']"
-        @tap="onClick(item)"
-        >{{ item.name }}</view
+        @tap="onClick(item, index)"
+        >{{ item.topicName }}</view
       >
     </scroll-view>
   </view>
@@ -16,43 +16,8 @@
 export default {
   data() {
     return {
-      topicList: [
-        {
-          id: 1,
-          name: '二手',
-          isCheck: false,
-        },
-        {
-          id: 2,
-          name: '相亲专区',
-          isCheck: false,
-        },
-        {
-          id: 3,
-          name: '二手',
-          isCheck: false,
-        },
-        {
-          id: 4,
-          name: 'windows系统',
-          isCheck: false,
-        },
-        {
-          id: 5,
-          name: 'windows系统',
-          isCheck: false,
-        },
-        {
-          id: 6,
-          name: 'windows系统',
-          isCheck: false,
-        },
-        {
-          id: 7,
-          name: 'windows系统',
-          isCheck: false,
-        },
-      ],
+      topicList: [],
+      currentIndex: -1,
     };
   },
   watch: {
@@ -60,16 +25,37 @@ export default {
       handler(arr) {
         this.$emit(
           'change',
-          arr.filter((v) => v.isCheck)
+          arr.find((v) => v.isCheck)
         );
       },
       deep: true,
     },
   },
+  created() {
+    this.onInitData();
+  },
   methods: {
-    onClick(row) {
-      row.isCheck = !row.isCheck;
-      console.log(row);
+    onInitData() {
+      this.$request('dragon.topic.all').then((res) => {
+        this.topicList = res.data
+          ? res.data.map((v) => ({ ...v, isCheck: false }))
+          : [];
+      });
+    },
+    onClick(row, index) {
+      // 如果是当前项取反
+      if (this.currentIndex === index) {
+        this.topicList[index].isCheck = !this.topicList[index].isCheck;
+      } else {
+        // 不是先取消所有状态
+        this.topicList.forEach((item) => {
+          item.isCheck = false;
+        });
+        // 当前项设置为true
+        this.topicList[index].isCheck = true;
+      }
+      //记录当前index
+      this.currentIndex = index;
     },
   },
 };

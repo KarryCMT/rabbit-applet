@@ -6,7 +6,7 @@
       <view class="title-form-box">
         <input
           class="input"
-          maxlength="20"
+          maxlength="50"
           placeholder="请输入标题"
           v-model="modelForm.title"
           :placeholder-style="placeholderStyle"
@@ -22,14 +22,14 @@
           placeholder-style="color: #b9b9b9;font-size: 30rpx;font-weight: 200;"
         />
       </view>
-      <view class="topic-box">
-        <view class="items" v-for="item in TopicArr" :key="item.id">
+      <view class="topic-box" v-if="TopicRow">
+        <view class="items">
           <image class="icon" :src="messageTopicIcon"></image>
-          <text class="name">{{ item.name }}</text>
+          <text class="name">{{ TopicRow.topicName }}</text>
         </view>
       </view>
     </view>
-    <FooterBox @publish="onPublish" />
+    <FooterBox @publish="onPublish" @draft="onDraft" />
   </view>
 </template>
 
@@ -49,13 +49,14 @@ export default {
   data() {
     return {
       messageTopicIcon,
-      TopicArr: [],
+      TopicRow: null,
       modelForm: {
         userId: '100',
         topicId: '100',
         title: '',
         content: '',
-        pictures: '',
+        pictures:
+          'https://pic1.zhimg.com/v2-abed1a8c04700ba7d72b45195223e0ff_l.jpeg',
         remark: '',
       },
       placeholderStyle: `
@@ -66,11 +67,35 @@ export default {
     };
   },
   methods: {
+    // 草稿
+    onDraft() {},
+    // 发布
     onPublish() {
       this.onCreate();
     },
     // 创建API
     onCreate() {
+      if (!this.modelForm.title) {
+        uni.showToast({
+          title:'请输入标题',
+          icon:'none'
+        })
+        return
+      }
+      if (!this.modelForm.content) {
+        uni.showToast({
+          title:'请输入正文',
+          icon:'none'
+        })
+        return
+      }
+      if (!this.modelForm.topicId) {
+        uni.showToast({
+          title:'请选择话题',
+          icon:'none'
+        })
+        return
+      }
       this.$request('dragon.post.create', { data: { ...this.modelForm } }).then(
         (res) => {
           uni.switchTab({
@@ -80,8 +105,9 @@ export default {
       );
     },
     // 选择的话题
-    onTopicChange(arr) {
-      this.TopicArr = arr;
+    onTopicChange(row) {
+      this.TopicRow = row ? row : null;
+      this.modelForm.topicId = row ? row.id : null;
     },
   },
 };
