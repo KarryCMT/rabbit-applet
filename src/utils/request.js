@@ -74,7 +74,7 @@ class Request {
         url:`${url}`,
         method: methods || 'POST',
         header: uni.getStorageSync('token')
-          ? { Authorization: uni.getStorageSync('token') }
+          ? { Authorization: uni.getStorageSync('token') || null}
           : {},
         data,
       });
