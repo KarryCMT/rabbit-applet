@@ -17,7 +17,7 @@
       >
         <image
           class="img-tip"
-          :src="item.pictures"
+          :src="item.cover"
           mode="widthFix"
           lazy-load
           :data-item="item"
@@ -45,11 +45,11 @@
 </template>
 
 <script>
-import HomeNavBar from './components/home-nav-bar.vue';
-import likeFill from '@/static/svg/like-fill.svg';
-import likeIcon from '@/static/svg/like-icon.svg';
+import HomeNavBar from "./components/home-nav-bar.vue";
+import likeFill from "@/static/svg/like-fill.svg";
+import likeIcon from "@/static/svg/like-icon.svg";
 export default {
-  name: 'RbHome',
+  name: "RbHome",
   components: {
     HomeNavBar,
   },
@@ -71,12 +71,11 @@ export default {
   },
   created() {
     /* 数据赋值 */
-    this.onLoadPage();
   },
   onPageScroll(v) {
     this.onScroll(v);
   },
-  onShow(){
+  onShow() {
     this.onLoadPage();
   },
   onLoad() {},
@@ -125,7 +124,7 @@ export default {
             })
             .exec(() => {
               if (this.flowData.column <= heightArr.length) {
-                resolve(this.getMinObj(heightArr, 'height'));
+                resolve(this.getMinObj(heightArr, "height"));
               }
             });
         }
@@ -133,7 +132,7 @@ export default {
     },
     /* 初始化瀑布流数据 */
     async initValue(i) {
-      console.log('🚀🚀~this.flowData.list.length', this.flowData.list.length);
+      console.log("🚀🚀~this.flowData.list.length", this.flowData.list.length);
 
       if (i >= this.flowData.list.length) return false;
       const minHeightRes = await this.getMinColumnHeight();
@@ -155,16 +154,20 @@ export default {
     // 详情
     onDetail(row) {
       uni.navigateTo({
-        url: '/pages/detail/index',
+        url: `/pages/detail/index?id=${row.id}`,
       });
     },
 
     // 初始化数据
     onLoadPage() {
-      this.$request('dragon.post.page', { data: { ...this.searchForm } }).then(
+      this.$request("dragon.post.page", { data: { ...this.searchForm } }).then(
         (res) => {
-          this.flowData.list = res.data.list;
-          console.log('🚀🚀~初始化数据', this.flowData);
+          this.flowData.list = res.data.list.map((v) => {
+            return {
+              ...v,
+              cover: v.picturesList.length ? v.picturesList[0].savePath : "",
+            };
+          });
           /* 初始化每一列的数据 */
           for (let i = 1; i <= this.flowData.column; i++) {
             this.$set(this.flowData, `column_${i}`, []);

@@ -1,16 +1,16 @@
 <template>
-  <page-meta
-    :page-style="'overflow:' + (show ? 'hidden' : 'visible')"
-  ></page-meta>
+  <page-meta :page-style="'overflow:' + (show ? 'hidden' : 'visible')" />
   <!-- 我的 -->
   <view class="dg-detail-container">
-    <DetailNavBar :top="scrollTop" />
-    <TitleBox :form="{}" />
-    <BodyBox />
+    <DetailNavBar :top="scrollTop" :form="modelForm" />
+    <TitleBox :form="modelForm" />
+    <BodyBox :form="modelForm" />
     <CommentBox
+      ref="CommentBoxRef"
       @comment="onComment"
       @close="show = false"
       @open="show = true"
+      :form="modelForm"
     />
     <FooterBox @comment="onComment" />
     <!-- 评论输入框 -->
@@ -24,15 +24,16 @@
     >
       <view class="rb-comment-popup-container">
         <view class="comment-main-input">
-          <view class="info">
-            <text class="l-txt">回复 {{ '小狐狸不吃素' }}:</text>
+          <view class="info" v-if="replyContentRow">
+            <text class="l-txt">回复 {{ replyContentRow.name }}:</text>
             <text class="r-txt">”</text>
           </view>
-          <view class="reply-content"
-            >这是回复的内容啊这是回复的内容啊这是回复的内容啊</view
-          >
+          <view class="reply-content" v-if="replyContentRow">{{
+            replyContentRow.content
+          }}</view>
           <view class="input">
             <textarea
+              v-model="content"
               placeholder-style="color:#ccc;font-weight:200;font-size:28rpx;"
               cursor-spacing="200"
               maxlength="300"
@@ -49,13 +50,13 @@
 </template>
 
 <script>
-import TitleBox from './components/title-box.vue';
-import DetailNavBar from './components/detail-nav-bar.vue';
-import BodyBox from './components/body-box.vue';
-import FooterBox from './components/footer-box.vue';
-import CommentBox from './components/comment-box.vue';
+import TitleBox from "./components/title-box.vue";
+import DetailNavBar from "./components/detail-nav-bar.vue";
+import BodyBox from "./components/body-box.vue";
+import FooterBox from "./components/footer-box.vue";
+import CommentBox from "./components/comment-box.vue";
 export default {
-  name: 'RbDetail',
+  name: "RbDetail",
   components: {
     TitleBox,
     BodyBox,
@@ -65,16 +66,29 @@ export default {
   },
   data() {
     return {
+      content: "",
       scrollTop: 0,
       show: false,
       replyContentRow: null,
       isDisabled: false,
+      modelForm: {},
     };
+  },
+  onLoad(params) {
+    this.onLoadData(params.id);
   },
   onPageScroll(v) {
     this.onScroll(v);
   },
   methods: {
+    // 获取数据
+    onLoadData(id) {
+      this.$request("dragon.post.detail", { data: { id } }).then((res) => {
+        if (res.statusCode === 600) {
+          this.modelForm = res.data;
+        }
+      });
+    },
     // 滚动
     onScroll(v) {
       const { scrollTop } = v;
@@ -89,10 +103,32 @@ export default {
     },
     // 发送
     onSend() {
-      console.log(this.isDisabled);
-
+      if (!this.content) {
+        uni.showToast({
+          title: "请输入评论内容",
+          icon: "none",
+        });
+        return;
+      }
       this.show = this.isDisabled;
-      this.$refs.RbCommentPopupRef.hide({});
+      console.log("发送", this.replyContentRow);
+      const payload = this.replyContentRow
+        ? { parentId: this.replyContentRow.id, userId: "200",answerId:'' }
+        : { parentId: "0", userId: "200" };
+      this.onCommentCreateData(payload);
+    },
+    // 新增评论
+    onCommentCreateData(row) {
+      this.$request("dragon.comment.create", {
+        data: {
+          ...row,
+          postId: this.modelForm.id,
+          content: this.content,
+        },
+      }).then((res) => {
+        this.$refs.RbCommentPopupRef.hide({});
+        this.$refs.CommentBoxRef.onGetCommentList(this.modelForm.id);
+      });
     },
   },
 };

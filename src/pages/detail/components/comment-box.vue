@@ -11,10 +11,15 @@
       <view class="comment-area-box">
         <view
           class="comment-items"
-          v-for="item in commentList"
+          v-for="(item, index) in commentList"
           :key="item.time"
         >
-          <CommentListItems :item="item" @unfold="onUnfold" @reply="onReply" />
+          <CommentListItems
+            :index="index + 1"
+            :item="item"
+            @unfold="onUnfold"
+            @reply="onReply"
+          />
         </view>
       </view>
     </view>
@@ -26,7 +31,11 @@
           v-for="item in commentChildrenList"
           :key="item.time"
         >
-          <CommentListItems :isUnfold="false" :item="item" @reply="onChildrenReply" />
+          <CommentListItems
+            :isUnfold="false"
+            :item="item"
+            @reply="onChildrenReply"
+          />
           <view v-if="item.children.length" class="children-items">
             <CommentListItems
               :isUnfold="false"
@@ -46,7 +55,7 @@
 </template>
 
 <script>
-import CommentListItems from './comment-list-items.vue';
+import CommentListItems from "./comment-list-items.vue";
 export default {
   components: {
     CommentListItems,
@@ -60,217 +69,141 @@ export default {
   data() {
     return {
       show: false,
-      commentList: [
-        {
-          likeCount: 9,
-          avatar:
-            'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-          name: '李同学啊',
-          isAuthor: true,
-          time: 1706405405410,
-          city: '广东',
-          content:
-            '抱歉各位，我不知道会惹来这么大争议，其实我是来分享喜悦的并不是恶意炫耀，加上普通两字，实在欠妥!',
-          children: [
-            {
-              avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '李同学啊',
-              isAuthor: true,
-              time: 1706405405410,
-              likeCount: 9,
-              replyName: '小鸭子',
-              city: '广东',
-              content: '谢谢提醒置顶了',
-            },
-            {
-              avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '小鸭子',
-              isAuthor: false,
-              likeCount: 9,
-              time: 1706405305410,
-              replyName: '小鸭子',
-              city: '重庆',
-              content: '可以置顶一下这一条或者干脆改下标题好了念祝你新婚快乐',
-            },
-            {
-              avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '走不出怪圈的人',
-              isAuthor: false,
-              time: 1706405305410,
-              likeCount: 9,
-              replyName: null,
-              city: '广东',
-              content: '4000一围，是在四星级大酒店还是五星级大酒店摆?',
-            },
-          ],
-        },
-        {
-          likeCount: 9,
-          avatar:
-            'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-          name: '李同学啊',
-          isAuthor: true,
-          time: 1706405405410,
-          city: '广东',
-          content:
-            '抱歉各位，我不知道会惹来这么大争议，其实我是来分享喜悦的并不是恶意炫耀，加上普通两字，实在欠妥!',
-          children: [
-            {
-              avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '李同学啊',
-              isAuthor: true,
-              time: 1706405405410,
-              likeCount: 9,
-              replyName: '小鸭子',
-              city: '广东',
-              content: '谢谢提醒置顶了',
-            },
-            {
-              avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '小鸭子',
-              isAuthor: false,
-              likeCount: 9,
-              time: 1706405305410,
-              replyName: '小鸭子',
-              city: '重庆',
-              content: '可以置顶一下这一条或者干脆改下标题好了念祝你新婚快乐',
-            },
-            {
-              avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '走不出怪圈的人',
-              isAuthor: false,
-              time: 1706405305410,
-              likeCount: 9,
-              replyName: null,
-              city: '广东',
-              content: '4000一围，是在四星级大酒店还是五星级大酒店摆?',
-            },
-          ],
-        },
-      ],
+      commentList: [],
       commentChildrenList: [
         {
           likeCount: 9,
           avatar:
-            'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-          name: '李同学啊',
+            "https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp",
+          name: "李同学啊",
           isAuthor: true,
           time: 1706405405410,
-          city: '广东',
+          city: "广东",
           content:
-            '抱歉各位，我不知道会惹来这么大争议，其实我是来分享喜悦的并不是恶意炫耀，加上普通两字，实在欠妥!',
+            "抱歉各位，我不知道会惹来这么大争议，其实我是来分享喜悦的并不是恶意炫耀，加上普通两字，实在欠妥!",
           children: [
             {
               avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '李同学啊',
+                "https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp",
+              name: "李同学啊",
               isAuthor: true,
               time: 1706405405410,
               likeCount: 9,
-              replyName: '小鸭子',
-              city: '广东',
-              content: '谢谢提醒置顶了',
+              replyName: "小鸭子",
+              city: "广东",
+              content: "谢谢提醒置顶了",
             },
             {
               avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '小鸭子',
+                "https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp",
+              name: "小鸭子",
               isAuthor: false,
               likeCount: 9,
               time: 1706405305410,
-              replyName: '小鸭子',
-              city: '重庆',
-              content: '可以置顶一下这一条或者干脆改下标题好了念祝你新婚快乐',
+              replyName: "小鸭子",
+              city: "重庆",
+              content: "可以置顶一下这一条或者干脆改下标题好了念祝你新婚快乐",
             },
             {
               avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '走不出怪圈的人',
-              isAuthor: false,
-              time: 1706405305410,
-              likeCount: 9,
-              replyName: null,
-              city: '广东',
-              content: '4000一围，是在四星级大酒店还是五星级大酒店摆?',
-            },
-            {
-              avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '小鸭子',
-              isAuthor: false,
-              likeCount: 9,
-              time: 1706405305410,
-              replyName: '小鸭子',
-              city: '重庆',
-              content: '可以置顶一下这一条或者干脆改下标题好了念祝你新婚快乐',
-            },
-            {
-              avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '走不出怪圈的人',
+                "https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp",
+              name: "走不出怪圈的人",
               isAuthor: false,
               time: 1706405305410,
               likeCount: 9,
               replyName: null,
-              city: '广东',
-              content: '4000一围，是在四星级大酒店还是五星级大酒店摆?',
+              city: "广东",
+              content: "4000一围，是在四星级大酒店还是五星级大酒店摆?",
             },
             {
               avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '小鸭子',
+                "https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp",
+              name: "小鸭子",
               isAuthor: false,
               likeCount: 9,
               time: 1706405305410,
-              replyName: '小鸭子',
-              city: '重庆',
-              content: '可以置顶一下这一条或者干脆改下标题好了念祝你新婚快乐',
+              replyName: "小鸭子",
+              city: "重庆",
+              content: "可以置顶一下这一条或者干脆改下标题好了念祝你新婚快乐",
             },
             {
               avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '走不出怪圈的人',
+                "https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp",
+              name: "走不出怪圈的人",
               isAuthor: false,
               time: 1706405305410,
               likeCount: 9,
               replyName: null,
-              city: '广东',
-              content: '4000一围，是在四星级大酒店还是五星级大酒店摆?',
+              city: "广东",
+              content: "4000一围，是在四星级大酒店还是五星级大酒店摆?",
+            },
+            {
+              avatar:
+                "https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp",
+              name: "小鸭子",
+              isAuthor: false,
+              likeCount: 9,
+              time: 1706405305410,
+              replyName: "小鸭子",
+              city: "重庆",
+              content: "可以置顶一下这一条或者干脆改下标题好了念祝你新婚快乐",
+            },
+            {
+              avatar:
+                "https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp",
+              name: "走不出怪圈的人",
+              isAuthor: false,
+              time: 1706405305410,
+              likeCount: 9,
+              replyName: null,
+              city: "广东",
+              content: "4000一围，是在四星级大酒店还是五星级大酒店摆?",
             },
           ],
         },
       ],
       avatar:
-        'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
+        "https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp",
     };
   },
   onLoad() {},
   computed: {},
+  watch: {
+    form: {
+      handler(obj) {
+        if (obj.id) {
+          this.onGetCommentList(obj.id);
+        }
+      },
+      immediate: true,
+    },
+  },
   methods: {
+    // 获取评论列表
+    onGetCommentList(postId) {
+      this.$request("dragon.comment.list", { data: { postId } }).then((res) => {
+        this.commentList = res.data;
+      });
+    },
+
     onUnfold(row) {
-      this.$emit('open');
+      this.$emit("open");
       this.$refs.RbListPopupRef.show({});
     },
     onClose() {
-      this.$emit('close');
+      this.$emit("close");
     },
     onCancel() {
       this.$refs.RbListPopupRef.hide();
     },
     onComment() {
-      this.$emit('comment', null, false);
+      this.$emit("comment", null, false);
     },
     onReply(row) {
-      this.$emit('comment', row, false);
+      this.$emit("comment", row, false);
     },
     onChildrenReply(row) {
-      this.$emit('comment', row, true);
+      this.$emit("comment", row, true);
     },
   },
 };

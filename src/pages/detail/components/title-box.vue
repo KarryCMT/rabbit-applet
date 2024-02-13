@@ -1,9 +1,7 @@
 <!-- 瀑布流布局 -->
 <template>
   <view class="title-box">
-    <text class="name"
-      >习近平同法国总统马克龙互致贺电习近平同法国总统马克龙互致贺电</text
-    >
+    <text class="name">{{ form.title }}</text>
   </view>
 </template>
 

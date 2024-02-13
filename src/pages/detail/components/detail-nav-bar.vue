@@ -13,8 +13,8 @@
         <image class="icon" @click="onBack" :src="backIcon"></image>
         <view class="search-box">
           <view class="left-box">
-            <image class="avatar" :src="avatar"></image>
-            <text class="name">李同学</text>
+            <image class="avatar" :src="form.avatar"></image>
+            <text class="name">{{ form.name }}</text>
           </view>
 
           <view class="follow">关注</view>
@@ -25,13 +25,14 @@
 </template>
 
 <script>
-import backIcon from '@/static/svg/back.svg';
+import backIcon from "@/static/svg/back.svg";
 export default {
   props: {
     top: {
       type: Number,
       default: 0,
     },
+    form: Object,
   },
   data() {
     return {
@@ -41,7 +42,7 @@ export default {
       barWidth: null,
       opacity: 1,
       avatar:
-        'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
+        "https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp",
     };
   },
   watch: {
@@ -61,7 +62,7 @@ export default {
       success: function (res) {
         // console.log(res)
         that.statusBarHeight = res.statusBarHeight; //手机状态栏高度
-        let isiOS = res.system.indexOf('iOS') > -1; //是否为iOS系统
+        let isiOS = res.system.indexOf("iOS") > -1; //是否为iOS系统
         that.barHeight = !isiOS ? 48 : 44; //导航栏高度，iOS：48，Android：44
         that.barWidth = res.windowWidth - 87; //nabbar可操作宽度 = 屏幕宽度 - 小程序右上角的胶囊宽度（87）
       },

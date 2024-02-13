@@ -11,7 +11,9 @@
         <view v-if="item.isAuthor" class="author">作者</view>
       </view>
       <view class="body">
-        <text v-if="item.replyName" @tap="onReply(item)" class="is-reply">回复</text>
+        <text v-if="item.replyName" @tap="onReply(item)" class="is-reply"
+          >回复</text
+        >
         <text v-if="item.replyName" class="reply-name">{{
           item.replyName
         }}</text>
@@ -20,26 +22,28 @@
       </view>
       <view class="content-bottom">
         <view>
-          <text v-if="isUnfold" class="unfold" @tap="onUnfold(item)">展开({{ item.children.length }})</text>
+          <text v-if="isUnfold" class="unfold" @tap="onUnfold(item)"
+            >展开({{ item.children.length }})</text
+          >
           <text
             class="time"
             :style="{ 'margin-left': !isUnfold ? '0rpx;' : '20rpx;' }"
-            >{{ formatTime(item.time) }}</text
+            >{{ formatTime(item.createTime) }}</text
           >
-          <text class="city">{{ item.city }}</text>
+          <text class="city">{{ item.city || "重庆" }}</text>
         </view>
       </view>
     </view>
     <view class="like">
-      <text> 1 楼 </text>
-      <text class="reply"  @tap="onReply(item)">回复</text>
+      <text> {{ index }} 楼 </text>
+      <text class="reply" v-if="!isReply" @tap="onReply(item)">回复</text>
     </view>
   </view>
 </template>
 
 <script>
-import likeIcon from '@/static/svg/like.svg';
-import { formatTime } from '@/utils/index.js';
+import likeIcon from "@/static/svg/like.svg";
+import { formatTime } from "@/utils/index.js";
 export default {
   props: {
     item: {
@@ -50,6 +54,10 @@ export default {
       type: Boolean,
       default: true,
     },
+    index: {
+      type: [String, Number],
+      default: 1,
+    },
   },
   data() {
     return {
@@ -57,15 +65,19 @@ export default {
     };
   },
   onLoad() {},
-  computed: {},
+  computed: {
+    isReply(){
+      return this.item.userId === '100'
+    }
+  },
   methods: {
     formatTime,
     onUnfold(row) {
-      this.$emit('unfold', row);
+      this.$emit("unfold", row);
     },
-    onReply(row){
-      this.$emit('reply', row);
-    }
+    onReply(row) {
+      this.$emit("reply", row);
+    },
   },
 };
 </script>
