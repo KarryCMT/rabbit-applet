@@ -17,16 +17,9 @@
     >
       <view class="rb-login-popup-container">
         <view class="login-main-input">
-          <text class="title-txt">密码登录</text>
+          <text class="title-txt">邮箱登录</text>
           <view class="username">
-            <input v-model="formData.username" placeholder="请输入账号" />
-          </view>
-          <view class="password">
-            <input
-              v-model="formData.password"
-              type="password"
-              placeholder="请输入密码"
-            />
+            <input v-model="formData.username" placeholder="请输入邮箱" />
           </view>
           <view class="verify-code">
             <input
@@ -34,7 +27,8 @@
               placeholder="请输入验证码"
               maxlength="6"
             />
-            <image class="code-img" :src="verificationCode" @tap="getVerificationCode"></image>
+            <view class="code-img" v-if="isCountdown" @tap="onSendEmailCode">{{'获取邮箱验证码'}}</view>
+            <view class="code-img" v-else >{{countdownText}}</view>
           </view>
         </view>
         <view class="popup-footer-box" @tap="onLogin">
@@ -55,9 +49,10 @@ export default {
   components: { HeaderInfo, FuncMenu, MineItem },
   data() {
     return {
-      verificationCode: '',
+      isCountdown:true,
+      countdownText:'',
       formData: {
-        username: '',
+        username: '18223673150@163.com',
         password: '',
         phone: '',
         captcha: '',
@@ -66,9 +61,7 @@ export default {
       },
     };
   },
-  created() {
-    this.getVerificationCode();
-  },
+  created() {},
   onShow() {
     this.onOpenLogin();
   },
@@ -93,17 +86,34 @@ export default {
         console.log('🚀🚀~res', res);
       });
     },
-    // 获取验证码
-    getVerificationCode() {
-      this.$request('dragon.common.verificationCode', { methods: 'get' }).then(
-        (res) => {
-          if (res && res.statusCode === 600) {
-            this.verificationCode = 'data:image/png;base64,' + res.data.image;
-            this.formData.uuid = res.data.uuid;
-          }
+    // 获取邮箱验证码
+    onSendEmailCode() {
+      this.$request('dragon.common.sendEmailCode', {data:this.formData}).then((res) => {
+        if (res && res.statusCode === 600) {
+          this.onCountdown()
         }
-      );
+      });
     },
+    // 倒计时
+    onCountdown() {
+      if (this.isCountdown) {
+        this.isCountdown = false;
+        let langTime =60;
+        let timer = setInterval(()=> {
+          if (langTime === 0) {
+            this.isCountdown = true;
+            this.countdownText = "获取邮箱验证码";
+            clearInterval(timer);
+          } else {
+            langTime--;
+            this.countdownText = `倒计时${langTime}秒`;
+          }
+        }, 1000);
+      } else {
+        console.log("不能点了")
+      }
+    },
+
   },
 };
 </script>
@@ -124,8 +134,7 @@ export default {
         font-weight: 600;
       }
       .username,
-      .verify-code,
-      .password {
+      .verify-code {
         margin-top: 30rpx;
         background: #eff3f6;
         padding: 20rpx 20rpx;
@@ -140,8 +149,11 @@ export default {
         display: flex;
         align-items: center;
         .code-img {
-          width: 300rpx;
-          height: 80rpx;
+          width: 390rpx;
+          text-align: right;
+        }
+        .code-img:active {
+          opacity: 0.5;
         }
       }
     }
