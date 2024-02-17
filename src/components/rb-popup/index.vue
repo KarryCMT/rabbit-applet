@@ -35,7 +35,7 @@
       :style="[
         { height: height },
         {'z-index':zIndex},
-        { 'border-radius': isRadius ? '10rpx;' : 'none;' },
+        { 'border-radius': isRadius ? '10rpx 10rpx 0rpx 0rpx;' : 'none;' },
       ]"
     >
       <view>{{ message }}</view>

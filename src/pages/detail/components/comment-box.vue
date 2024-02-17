@@ -41,7 +41,7 @@
               :isUnfold="false"
               v-for="children in item.children"
               :item="children"
-              :key="children.time"
+              :key="children.id"
               @reply="onChildrenReply"
             />
           </view>

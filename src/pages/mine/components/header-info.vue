@@ -1,7 +1,10 @@
 <template>
   <view class="mine-header-info-container">
-    <view class="left-box">
-      <image src="https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp" class="image"></image>
+    <view class="left-box" v-if="isLogin">
+      <image
+        src="https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp"
+        class="image"
+      ></image>
       <view class="info-box">
         <view class="username">
           <text class="name">{{ '小狐狸不吃素' }}</text>
@@ -9,8 +12,11 @@
         </view>
       </view>
     </view>
-    <view class="right-box">
+    <view class="right-box" v-if="isLogin">
       <view class="btn" @click="onPublish">发布</view>
+    </view>
+    <view class="login-box" v-if="!isLogin">
+      <button class="btn" @click="onLogin">立即登录</button>
     </view>
   </view>
 </template>
@@ -22,18 +28,26 @@ export default {
   props: {
     item: Object,
   },
+  computed: {
+    isLogin() {
+      return false;
+    },
+  },
   data() {
     return {
       rightIcon,
     };
   },
-  methods:{
-    onPublish(){
+  methods: {
+    onPublish() {
       uni.navigateTo({
-        url: '/pages/publish/index'
-      })
-    }
-  }
+        url: '/pages/publish/index',
+      });
+    },
+    onLogin() {
+      this.$emit('login');
+    },
+  },
 };
 </script>
 
@@ -100,8 +114,27 @@ export default {
       background: #eecd50;
       border: 2px solid #fff;
     }
-    .btn:active{
-      opacity: .5;
+    .btn:active {
+      opacity: 0.5;
+    }
+  }
+  .login-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .btn {
+      background-color: $main-color;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0rpx 60rpx;
+      box-sizing: border-box;
+      font-size: 28rpx;
+    }
+    button:active {
+      opacity: 0.5;
     }
   }
 }

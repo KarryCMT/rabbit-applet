@@ -29,6 +29,7 @@
     "@vue/shared": "^3.0.0",
     "core-js": "^3.6.5",
     "crypto-js": "^4.1.1",
+    "jsencrypt": "3.3.2",
     "flyio": "^0.6.2",
     "moment": "^2.29.4",
     "regenerator-runtime": "^0.12.1",

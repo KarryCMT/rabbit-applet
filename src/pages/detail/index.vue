@@ -115,7 +115,9 @@ export default {
       const payload = this.replyContentRow
         ? { parentId: this.replyContentRow.id, userId: "200",answerId:'' }
         : { parentId: "0", userId: "200" };
-      this.onCommentCreateData(payload);
+        console.log('🚀🚀~payload',payload);
+        
+      // this.onCommentCreateData(payload);
     },
     // 新增评论
     onCommentCreateData(row) {
