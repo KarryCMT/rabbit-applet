@@ -1,11 +1,18 @@
 <!-- 瀑布流布局 -->
 <template>
-  <view class="home-container">
+  <scroll-view
+    @scrolltolower="onScrolltolower"
+    scroll-y="true"
+    class="home-container"
+  >
     <HomeNavBar :top="scrollTop" />
     <view
       :id="`cont_${index + 1}`"
       class="cont-box"
-      :style="{ width: widthCalc, 'margin-left': index === 0 ? 0 : marginCalc }"
+      :style="{
+        width: widthCalc,
+        'margin-left': index === 0 ? 0 : marginCalc,
+      }"
       v-for="(numVal, index) in flowData.column"
       :key="index"
     >
@@ -41,7 +48,7 @@
         </view>
       </view>
     </view>
-  </view>
+  </scroll-view>
 </template>
 
 <script>
@@ -184,14 +191,28 @@ export default {
         }
       );
     },
+
+    //
+    onScrolltolower() {
+      console.log('onScrolltolower');
+    },
   },
 };
 </script>
-
+<style>
+page{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+</style>
 <style lang="scss" scoped>
 .home-container {
+  flex: 1;
   padding: 0 20rpx;
+  box-sizing: border-box;
   .cont-box {
+    flex: 1;
     $borderRadius: 12rpx;
     float: left;
     .item-box {

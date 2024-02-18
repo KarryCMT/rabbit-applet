@@ -116,7 +116,6 @@ export default {
         return;
       }
       this.show = this.isDisabled;
-      console.log('发送', this.replyContentRow);
       const payload = this.replyContentRow
         ? {
             parentId: this.replyContentRow.id,
@@ -124,8 +123,6 @@ export default {
             answerId: this.replyContentRow.userId,
           }
         : { parentId: '0', userId: this.userId };
-      console.log('🚀🚀~payload', payload);
-
       this.onCommentCreateData(payload);
     },
     // 新增评论
@@ -139,9 +136,9 @@ export default {
       }).then((res) => {
         this.$refs.RbCommentPopupRef.hide({});
         this.$refs.CommentBoxRef.onGetCommentList(this.modelForm.id);
-        console.log('🚀🚀~this.modelForm',this.modelForm);
-        
-        this.$refs.CommentBoxRef.onGetChildrenCommentList({id:this.modelForm.id});
+        if (this.replyContentRow) {
+          this.$refs.CommentBoxRef.onGetChildrenCommentList();
+        }
       });
     },
   },

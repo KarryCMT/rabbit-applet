@@ -85,9 +85,7 @@ export default {
       return this.item.userId === uni.getStorageSync('userInfo').id;
     },
     isAuthor(){
-      console.log('🚀🚀~this.item.userId ',this.item.userId ,uni.getStorageSync('userInfo').id);
-      
-      return this.form.userId === uni.getStorageSync('userInfo').id;
+      return this.form.userId === this.item.userId;
     }
   },
   methods: {

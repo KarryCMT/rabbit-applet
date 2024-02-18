@@ -74,6 +74,7 @@ export default {
   data() {
     return {
       show: false,
+      childrenRow: {},
       commentList: [],
       commentChildrenList: [],
     };
@@ -103,14 +104,14 @@ export default {
     },
 
     // 获取所有回复的评论
-    onGetChildrenCommentList(row) {
+    onGetChildrenCommentList() {
       this.$request('dragon.comment.childrenComment', {
-        data: { parentId: row.id },
+        data: { parentId: this.childrenRow.id },
       }).then((res) => {
         if (res.statusCode === 600) {
           this.commentChildrenList = [
             {
-              ...row,
+              ...this.childrenRow,
               children: res.data,
             },
           ];
@@ -119,8 +120,9 @@ export default {
     },
 
     onUnfold(row) {
+      this.childrenRow = row;
       this.$emit('open');
-      this.onGetChildrenCommentList(row);
+      this.onGetChildrenCommentList();
       this.$refs.RbListPopupRef.show({});
     },
     onClose() {
@@ -136,7 +138,7 @@ export default {
       this.$emit('comment', row, false);
     },
     onChildrenReply(row) {
-      this.$emit('comment', row, true);
+      this.$emit('comment', { ...row, id: row.parentId }, true);
     },
   },
 };
