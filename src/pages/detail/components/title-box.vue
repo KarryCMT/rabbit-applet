@@ -26,7 +26,7 @@ export default {
 .title-box {
   width: 100%;
   border-left: 8px solid $main-color;
-  padding: 0 20rpx;
+  padding: 20rpx 20rpx;
   box-sizing: border-box;
   .name {
     display: flex;

@@ -34,29 +34,32 @@
 </template>
 
 <script>
-import CoverBox from "./components/cover-box.vue";
-import FooterBox from "./components/footer-box.vue";
-import TopicBox from "./components/topic-box.vue";
-import messageTopicIcon from "@/static/svg/message-topic.svg";
+import CoverBox from './components/cover-box.vue';
+import FooterBox from './components/footer-box.vue';
+import TopicBox from './components/topic-box.vue';
+import messageTopicIcon from '@/static/svg/message-topic.svg';
 export default {
-  name: "DgPublish",
+  name: 'DgPublish',
   components: {
     CoverBox,
     FooterBox,
     TopicBox,
   },
-
+  computed: {
+    userInfo() {
+      return uni.getStorageSync('userInfo') || {};
+    },
+  },
   data() {
     return {
       messageTopicIcon,
       TopicRow: null,
       modelForm: {
-        userId: "100",
-        topicId: "100",
-        title: "",
-        content: "",
-        pictures: "",
-        remark: "",
+        topicId: '100',
+        title: '',
+        content: '',
+        pictures: '',
+        remark: '',
       },
       placeholderStyle: `
         color: #b9b9b9;
@@ -76,37 +79,37 @@ export default {
     onCreate() {
       if (!this.modelForm.title) {
         uni.showToast({
-          title: "请输入标题",
-          icon: "none",
+          title: '请输入标题',
+          icon: 'none',
         });
         return;
       }
       if (!this.modelForm.content) {
         uni.showToast({
-          title: "请输入正文",
-          icon: "none",
+          title: '请输入正文',
+          icon: 'none',
         });
         return;
       }
       if (!this.modelForm.topicId) {
         uni.showToast({
-          title: "请选择话题",
-          icon: "none",
+          title: '请选择话题',
+          icon: 'none',
         });
         return;
       }
-      this.$request("dragon.post.create", { data: { ...this.modelForm } }).then(
-        (res) => {
-          uni.switchTab({
-            url: "/pages/home/index",
-          });
-        }
-      );
+      this.$request('dragon.post.create', {
+        data: { ...this.modelForm, userId: this.userInfo.id },
+      }).then((res) => {
+        uni.switchTab({
+          url: '/pages/home/index',
+        });
+      });
     },
 
     // 上传的图片
     onFileChange(arr) {
-      this.modelForm.pictures = arr.length ? arr.join(",") : "";
+      this.modelForm.pictures = arr.length ? arr.join(',') : '';
     },
 
     // 选择的话题

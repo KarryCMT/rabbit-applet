@@ -53,6 +53,7 @@ export default {
   components: { HeaderInfo, FuncMenu, MineItem },
   data() {
     return {
+      isLogin: false,
       isCountdown: true,
       countdownText: '',
       formData: {
@@ -65,20 +66,20 @@ export default {
       },
     };
   },
-  created() {},
-  onShow() {},
-  computed: {
-    isLogin() {
+  created() {
+    this.isLogin = this.onHasLogin();
+  },
+  onShow() {
+    this.isLogin = this.onHasLogin();
+  },
+  computed: {},
+  methods: {
+    onHasLogin() {
       return !!uni.getStorageSync('userInfo');
     },
-  },
-  methods: {
     // 打开登录弹窗
     onOpenLogin() {
       this.$refs.RbLoginPopupRef.show({});
-    },
-    onLogin() {
-      this.$emit('login');
     },
     // 登录方法
     onLogin() {
@@ -133,6 +134,7 @@ export default {
       this.$request('dragon.common.userInfo', {}).then((res) => {
         uni.setStorageSync('userInfo', res.data);
         this.$refs.RbLoginPopupRef.hide({});
+        this.isLogin = this.onHasLogin();
       });
     },
   },

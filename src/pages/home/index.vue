@@ -78,6 +78,12 @@ export default {
   onLoad() {
     this.onLoadPage();
   },
+  onShow() {
+    // if (this.flowData.list.length === 0) {
+    //   console.log('🚀🚀~11',11);
+    //   this.onLoadPage();
+    // }
+  },
   computed: {
     /* 计算列宽 */
     widthCalc() {

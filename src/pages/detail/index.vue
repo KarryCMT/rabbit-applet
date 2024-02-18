@@ -139,6 +139,9 @@ export default {
       }).then((res) => {
         this.$refs.RbCommentPopupRef.hide({});
         this.$refs.CommentBoxRef.onGetCommentList(this.modelForm.id);
+        console.log('🚀🚀~this.modelForm',this.modelForm);
+        
+        this.$refs.CommentBoxRef.onGetChildrenCommentList({id:this.modelForm.id});
       });
     },
   },

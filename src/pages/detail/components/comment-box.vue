@@ -16,6 +16,7 @@
         >
           <CommentListItems
             :index="index + 1"
+            :form="form"
             :item="item"
             @unfold="onUnfold"
             @reply="onReply"
@@ -33,6 +34,7 @@
         >
           <CommentListItems
             :isUnfold="false"
+            :form="form"
             :item="item"
             :index="-1"
             @reply="onChildrenReply"
@@ -41,6 +43,7 @@
             <CommentListItems
               :isUnfold="false"
               v-for="(children, index) in item.children"
+              :form="form"
               :item="children"
               :key="children.id"
               :index="index + 1"
@@ -72,98 +75,7 @@ export default {
     return {
       show: false,
       commentList: [],
-      commentChildrenList: [
-        {
-          likeCount: 9,
-          avatar:
-            'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-          name: '李同学啊',
-          isAuthor: true,
-          time: 1706405405410,
-          city: '广东',
-          content:
-            '抱歉各位，我不知道会惹来这么大争议，其实我是来分享喜悦的并不是恶意炫耀，加上普通两字，实在欠妥!',
-          children: [
-            {
-              avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '李同学啊',
-              isAuthor: true,
-              time: 1706405405410,
-              likeCount: 9,
-              replyName: '小鸭子',
-              city: '广东',
-              content: '谢谢提醒置顶了',
-            },
-            {
-              avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '小鸭子',
-              isAuthor: false,
-              likeCount: 9,
-              time: 1706405305410,
-              replyName: '小鸭子',
-              city: '重庆',
-              content: '可以置顶一下这一条或者干脆改下标题好了念祝你新婚快乐',
-            },
-            {
-              avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '走不出怪圈的人',
-              isAuthor: false,
-              time: 1706405305410,
-              likeCount: 9,
-              replyName: null,
-              city: '广东',
-              content: '4000一围，是在四星级大酒店还是五星级大酒店摆?',
-            },
-            {
-              avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '小鸭子',
-              isAuthor: false,
-              likeCount: 9,
-              time: 1706405305410,
-              replyName: '小鸭子',
-              city: '重庆',
-              content: '可以置顶一下这一条或者干脆改下标题好了念祝你新婚快乐',
-            },
-            {
-              avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '走不出怪圈的人',
-              isAuthor: false,
-              time: 1706405305410,
-              likeCount: 9,
-              replyName: null,
-              city: '广东',
-              content: '4000一围，是在四星级大酒店还是五星级大酒店摆?',
-            },
-            {
-              avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '小鸭子',
-              isAuthor: false,
-              likeCount: 9,
-              time: 1706405305410,
-              replyName: '小鸭子',
-              city: '重庆',
-              content: '可以置顶一下这一条或者干脆改下标题好了念祝你新婚快乐',
-            },
-            {
-              avatar:
-                'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-              name: '走不出怪圈的人',
-              isAuthor: false,
-              time: 1706405305410,
-              likeCount: 9,
-              replyName: null,
-              city: '广东',
-              content: '4000一围，是在四星级大酒店还是五星级大酒店摆?',
-            },
-          ],
-        },
-      ],
+      commentChildrenList: [],
     };
   },
   onLoad() {},
@@ -203,7 +115,6 @@ export default {
             },
           ];
         }
-        console.log('🚀🚀~获取所有回复的评论', res);
       });
     },
 

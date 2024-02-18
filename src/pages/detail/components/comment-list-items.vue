@@ -8,7 +8,7 @@
     <view class="content">
       <view class="userinfo">
         <text class="name">{{ item.name }}</text>
-        <view v-if="item.isAuthor" class="author">作者</view>
+        <view v-if="isAuthor" class="author">作者</view>
       </view>
       <view class="body">
         <text v-if="item.replyName" @tap="onReply(item)" class="is-reply"
@@ -22,12 +22,22 @@
       </view>
       <view class="content-bottom">
         <view>
-          <text v-if="isUnfold" class="unfold" @tap="onUnfold(item)"
+          <text
+            v-if="isUnfold && item.children.length"
+            class="unfold"
+            @tap="onUnfold(item)"
             >展开({{ item.children.length }})</text
           >
           <text
+            v-if="item.children.length === 0"
             class="time"
-            :style="{ 'margin-left': !isUnfold ? '0rpx;' : '20rpx;' }"
+            :style="{ 'margin-left': '0rpx;' }"
+            >{{ formatTime(item.createTime) }}</text
+          >
+          <text
+            v-if="item.children.length"
+            class="time"
+            :style="{ 'margin-left': '20rpx;' }"
             >{{ formatTime(item.createTime) }}</text
           >
           <text class="city">{{ item.city || '重庆' }}</text>
@@ -51,6 +61,10 @@ export default {
       type: Object,
       default: () => {},
     },
+    form: {
+      type: Object,
+      default: () => {},
+    },
     isUnfold: {
       type: Boolean,
       default: true,
@@ -68,8 +82,13 @@ export default {
   onLoad() {},
   computed: {
     isReply() {
-      return this.item.userId === '100';
+      return this.item.userId === uni.getStorageSync('userInfo').id;
     },
+    isAuthor(){
+      console.log('🚀🚀~this.item.userId ',this.item.userId ,uni.getStorageSync('userInfo').id);
+      
+      return this.form.userId === uni.getStorageSync('userInfo').id;
+    }
   },
   methods: {
     formatTime,

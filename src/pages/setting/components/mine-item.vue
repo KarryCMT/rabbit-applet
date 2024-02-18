@@ -103,6 +103,9 @@ export default {
     // 退出登录
     onOpenLogin() {
       uni.clearStorageSync();
+      uni.switchTab({
+        url: '/pages/mine/index',
+      });
     },
   },
 };
@@ -173,8 +176,8 @@ export default {
         font-size: 28rpx;
       }
     }
-    .center-box:active{
-      opacity: .5;
+    .center-box:active {
+      opacity: 0.5;
     }
   }
   .items:last-child {
