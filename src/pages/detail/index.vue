@@ -50,13 +50,13 @@
 </template>
 
 <script>
-import TitleBox from "./components/title-box.vue";
-import DetailNavBar from "./components/detail-nav-bar.vue";
-import BodyBox from "./components/body-box.vue";
-import FooterBox from "./components/footer-box.vue";
-import CommentBox from "./components/comment-box.vue";
+import TitleBox from './components/title-box.vue';
+import DetailNavBar from './components/detail-nav-bar.vue';
+import BodyBox from './components/body-box.vue';
+import FooterBox from './components/footer-box.vue';
+import CommentBox from './components/comment-box.vue';
 export default {
-  name: "RbDetail",
+  name: 'RbDetail',
   components: {
     TitleBox,
     BodyBox,
@@ -66,7 +66,7 @@ export default {
   },
   data() {
     return {
-      content: "",
+      content: '',
       scrollTop: 0,
       show: false,
       replyContentRow: null,
@@ -80,10 +80,15 @@ export default {
   onPageScroll(v) {
     this.onScroll(v);
   },
+  computed: {
+    userId() {
+      return uni.getStorageSync('userInfo').id;
+    },
+  },
   methods: {
     // 获取数据
     onLoadData(id) {
-      this.$request("dragon.post.detail", { data: { id } }).then((res) => {
+      this.$request('dragon.post.detail', { data: { id } }).then((res) => {
         if (res.statusCode === 600) {
           this.modelForm = res.data;
         }
@@ -105,23 +110,27 @@ export default {
     onSend() {
       if (!this.content) {
         uni.showToast({
-          title: "请输入评论内容",
-          icon: "none",
+          title: '请输入评论内容',
+          icon: 'none',
         });
         return;
       }
       this.show = this.isDisabled;
-      console.log("发送", this.replyContentRow);
+      console.log('发送', this.replyContentRow);
       const payload = this.replyContentRow
-        ? { parentId: this.replyContentRow.id, userId: "200",answerId:'' }
-        : { parentId: "0", userId: "200" };
-        console.log('🚀🚀~payload',payload);
-        
-      // this.onCommentCreateData(payload);
+        ? {
+            parentId: this.replyContentRow.id,
+            userId: this.userId,
+            answerId: this.replyContentRow.userId,
+          }
+        : { parentId: '0', userId: this.userId };
+      console.log('🚀🚀~payload', payload);
+
+      this.onCommentCreateData(payload);
     },
     // 新增评论
     onCommentCreateData(row) {
-      this.$request("dragon.comment.create", {
+      this.$request('dragon.comment.create', {
         data: {
           ...row,
           postId: this.modelForm.id,

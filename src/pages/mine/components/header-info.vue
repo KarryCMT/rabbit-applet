@@ -1,22 +1,16 @@
 <template>
   <view class="mine-header-info-container">
-    <view class="left-box" v-if="isLogin">
-      <image
-        src="https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp"
-        class="image"
-      ></image>
+    <view class="left-box" @tap="onSetting">
+      <image :src="userInfo.avatar" class="image"></image>
       <view class="info-box">
         <view class="username">
-          <text class="name">{{ '小狐狸不吃素' }}</text>
+          <text class="name">{{ userInfo.name }}</text>
           <image class="icon" :src="rightIcon"></image>
         </view>
       </view>
     </view>
-    <view class="right-box" v-if="isLogin">
+    <view class="right-box">
       <view class="btn" @click="onPublish">发布</view>
-    </view>
-    <view class="login-box" v-if="!isLogin">
-      <button class="btn" @click="onLogin">立即登录</button>
     </view>
   </view>
 </template>
@@ -29,8 +23,8 @@ export default {
     item: Object,
   },
   computed: {
-    isLogin() {
-      return false;
+    userInfo() {
+      return uni.getStorageSync('userInfo') || {};
     },
   },
   data() {
@@ -44,8 +38,11 @@ export default {
         url: '/pages/publish/index',
       });
     },
-    onLogin() {
-      this.$emit('login');
+
+    onSetting() {
+      uni.navigateTo({
+        url: '/pages/setting/index',
+      });
     },
   },
 };
@@ -115,25 +112,6 @@ export default {
       border: 2px solid #fff;
     }
     .btn:active {
-      opacity: 0.5;
-    }
-  }
-  .login-box {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    .btn {
-      background-color: $main-color;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 0rpx 60rpx;
-      box-sizing: border-box;
-      font-size: 28rpx;
-    }
-    button:active {
       opacity: 0.5;
     }
   }

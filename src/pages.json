@@ -64,6 +64,14 @@
         "navigationBarTitleText": "我的消息",
         "disableScroll": false
       }
+    },
+    {
+      "path": "pages/setting/index",
+      "style": {
+        "navigationBarBackgroundColor": "#eecd50",
+        "navigationBarTitleText": "个人信息",
+        "disableScroll": false
+      }
     }
   ],
   "lazyCodeLoading": "requiredComponents",

@@ -30,20 +30,21 @@
             :style="{ 'margin-left': !isUnfold ? '0rpx;' : '20rpx;' }"
             >{{ formatTime(item.createTime) }}</text
           >
-          <text class="city">{{ item.city || "重庆" }}</text>
+          <text class="city">{{ item.city || '重庆' }}</text>
         </view>
       </view>
     </view>
     <view class="like">
-      <text> {{ index }} 楼 </text>
+      <text v-if="index !== -1"> {{ index }} 楼 </text>
+      <text v-else>层主</text>
       <text class="reply" v-if="!isReply" @tap="onReply(item)">回复</text>
     </view>
   </view>
 </template>
 
 <script>
-import likeIcon from "@/static/svg/like.svg";
-import { formatTime } from "@/utils/index.js";
+import likeIcon from '@/static/svg/like.svg';
+import { formatTime } from '@/utils/index.js';
 export default {
   props: {
     item: {
@@ -66,17 +67,17 @@ export default {
   },
   onLoad() {},
   computed: {
-    isReply(){
-      return this.item.userId === '100'
-    }
+    isReply() {
+      return this.item.userId === '100';
+    },
   },
   methods: {
     formatTime,
     onUnfold(row) {
-      this.$emit("unfold", row);
+      this.$emit('unfold', row);
     },
     onReply(row) {
-      this.$emit("reply", row);
+      this.$emit('reply', row);
     },
   },
 };

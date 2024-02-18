@@ -3,7 +3,10 @@
   <view class="rb-mine-container">
     <rb-navbar />
     <view class="main-box">
-      <HeaderInfo @login="onOpenLogin" />
+      <HeaderInfo v-if="isLogin" />
+      <view class="login-box" v-else>
+        <button class="btn" @click="onOpenLogin">立即登录</button>
+      </view>
       <FuncMenu />
       <MineItem />
     </view>
@@ -27,8 +30,10 @@
               placeholder="请输入验证码"
               maxlength="6"
             />
-            <view class="code-img" v-if="isCountdown" @tap="onSendEmailCode">{{'获取邮箱验证码'}}</view>
-            <view class="code-img" v-else >{{countdownText}}</view>
+            <view class="code-img" v-if="isCountdown" @tap="onSendEmailCode">{{
+              '获取邮箱验证码'
+            }}</view>
+            <view class="code-img" v-else>{{ countdownText }}</view>
           </view>
         </view>
         <view class="popup-footer-box" @tap="onLogin">
@@ -43,14 +48,13 @@
 import HeaderInfo from './components/header-info.vue';
 import FuncMenu from './components/func-menu.vue';
 import MineItem from './components/mine-item.vue';
-import { encrypt } from '@/utils/crypte.js';
 export default {
   name: 'RbMine',
   components: { HeaderInfo, FuncMenu, MineItem },
   data() {
     return {
-      isCountdown:true,
-      countdownText:'',
+      isCountdown: true,
+      countdownText: '',
       formData: {
         username: '18223673150@163.com',
         password: '',
@@ -62,13 +66,19 @@ export default {
     };
   },
   created() {},
-  onShow() {
-    this.onOpenLogin();
+  onShow() {},
+  computed: {
+    isLogin() {
+      return !!uni.getStorageSync('userInfo');
+    },
   },
   methods: {
     // 打开登录弹窗
     onOpenLogin() {
       this.$refs.RbLoginPopupRef.show({});
+    },
+    onLogin() {
+      this.$emit('login');
     },
     // 登录方法
     onLogin() {
@@ -76,21 +86,25 @@ export default {
         data: {
           appId: 2,
           ...this.formData,
-          password: encrypt(this.formData.password),
           rememberMe: undefined,
           type: 'captcha',
           username: this.formData.username,
           notips: true,
         },
       }).then((res) => {
-        console.log('🚀🚀~res', res);
+        if (res.statusCode === 600) {
+          uni.setStorageSync('Authorization', res.data);
+          this.onGetUserInfo();
+        }
       });
     },
     // 获取邮箱验证码
     onSendEmailCode() {
-      this.$request('dragon.common.sendEmailCode', {data:this.formData}).then((res) => {
+      this.$request('dragon.common.sendEmailCode', {
+        data: this.formData,
+      }).then((res) => {
         if (res && res.statusCode === 600) {
-          this.onCountdown()
+          this.onCountdown();
         }
       });
     },
@@ -98,11 +112,11 @@ export default {
     onCountdown() {
       if (this.isCountdown) {
         this.isCountdown = false;
-        let langTime =60;
-        let timer = setInterval(()=> {
+        let langTime = 60;
+        let timer = setInterval(() => {
           if (langTime === 0) {
             this.isCountdown = true;
-            this.countdownText = "获取邮箱验证码";
+            this.countdownText = '获取邮箱验证码';
             clearInterval(timer);
           } else {
             langTime--;
@@ -110,10 +124,17 @@ export default {
           }
         }, 1000);
       } else {
-        console.log("不能点了")
+        console.log('不能点了');
       }
     },
 
+    // 获取用户信息
+    onGetUserInfo() {
+      this.$request('dragon.common.userInfo', {}).then((res) => {
+        uni.setStorageSync('userInfo', res.data);
+        this.$refs.RbLoginPopupRef.hide({});
+      });
+    },
   },
 };
 </script>
@@ -124,6 +145,27 @@ export default {
   height: 100%;
   background: #fff;
   .main-box {
+    .login-box {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: 50rpx;
+      box-sizing: border-box;
+      .btn {
+        background-color: $main-color;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0rpx 60rpx;
+        box-sizing: border-box;
+        font-size: 28rpx;
+      }
+      button:active {
+        opacity: 0.5;
+      }
+    }
   }
   .rb-login-popup-container {
     .login-main-input {

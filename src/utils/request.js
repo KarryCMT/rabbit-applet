@@ -73,8 +73,8 @@ class Request {
       return this.request({
         url:`${url}`,
         method: methods || 'POST',
-        header: uni.getStorageSync('token')
-          ? { Authorization: uni.getStorageSync('token') || null}
+        header: uni.getStorageSync('Authorization')
+          ? { Authorization: `Bearer ${uni.getStorageSync('Authorization')}` || null}
           : {},
         data,
       });

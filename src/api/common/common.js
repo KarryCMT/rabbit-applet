@@ -9,5 +9,7 @@ export default {
     verificationCode:'/rabbit/captcha/get',
     // 发送邮箱验证码
     sendEmailCode:'/rabbit/send/email/code',
+    // 获取用户信息
+    userInfo:'/rabbit/system/member/get/current'
   },
 };

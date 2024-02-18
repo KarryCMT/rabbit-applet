@@ -10,7 +10,7 @@
       :duration="duration"
     >
       <swiper-item v-for="item in form.picturesList" :key="item.id">
-        <image class="image" :src="item.savePath"></image>
+        <image mode="aspectFit" class="image" :src="item.savePath"></image>
       </swiper-item>
     </swiper>
     <text class="content">{{ form.content }}</text>
@@ -31,9 +31,9 @@ export default {
   },
   data() {
     return {
-      indicatorDots: true,
+      indicatorDots: false,
       autoplay: true,
-      interval: 1000,
+      interval: 3000,
       duration: 500,
     };
   },
