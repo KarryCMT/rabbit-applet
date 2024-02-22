@@ -2,7 +2,7 @@
   <page-meta :page-style="'overflow:' + (show ? 'hidden' : 'visible')" />
   <!-- 我的 -->
   <view class="dg-detail-container">
-    <DetailNavBar :top="scrollTop" :form="modelForm" />
+    <DetailNavBar :top="scrollTop" :form="modelForm" @follow="onFollow" />
     <TitleBox :form="modelForm" />
     <BodyBox :form="modelForm" />
     <CommentBox
@@ -12,7 +12,12 @@
       @open="show = true"
       :form="modelForm"
     />
-    <FooterBox @comment="onComment" />
+    <FooterBox
+      :form="modelForm"
+      @comment="onComment"
+      @like="onLike"
+      @collect="onCollect"
+    />
     <!-- 评论输入框 -->
     <rb-popup
       ref="RbCommentPopupRef"
@@ -88,10 +93,48 @@ export default {
   methods: {
     // 获取数据
     onLoadData(id) {
-      this.$request('dragon.post.detail', { data: { id } }).then((res) => {
+      this.$request('dragon.post.detail', {
+        data: { id, userId: this.userId },
+      }).then((res) => {
         if (res.statusCode === 600) {
           this.modelForm = res.data;
         }
+      });
+    },
+    // 点赞
+    onLike() {
+      this.$request('dragon.like.operate', {
+        data: {
+          postId: this.modelForm.id,
+          userId: this.userId,
+        },
+      }).then((res) => {
+        this.onLoadData(this.modelForm.id);
+      });
+    },
+    // 收藏
+    onCollect() {
+      this.$request('dragon.collect.create', {
+        data: {
+          postId: this.modelForm.id,
+          userId: this.userId,
+        },
+      }).then((res) => {
+        this.onLoadData(this.modelForm.id);
+      });
+    },
+    // 关注
+    onFollow() {
+      const url = this.modelForm.isFollow
+        ? 'dragon.follow.cancel'
+        : 'dragon.follow.create';
+      this.$request(url, {
+        data: {
+          followedId: this.modelForm.userId,
+          userId: this.userId,
+        },
+      }).then((res) => {
+        this.onLoadData(this.modelForm.id);
       });
     },
     // 滚动

@@ -6,17 +6,23 @@
       <text class="txt">评论一下</text>
     </view>
     <view class="icon-box">
-      <view class="items">
-        <image class="icon" :src="likeIcon"></image>
-        <text class="txt">12</text>
+      <view class="items" @tap="onLike">
+        <image
+          class="icon"
+          :src="form.isLike ? likeActiveIcon : likeIcon"
+        ></image>
+        <text class="txt">{{ form.likeCount }}</text>
       </view>
-      <view class="items">
-        <image class="icon" :src="collectIcon"></image>
-        <text class="txt">12</text>
+      <view class="items" @tap="onCollect">
+        <image
+          class="icon"
+          :src="form.isCollect ? collectActiveIcon : collectIcon"
+        ></image>
+        <text class="txt">{{ form.collectCount }}</text>
       </view>
       <view class="items">
         <image class="icon" :src="commentIcon"></image>
-        <text class="txt">11</text>
+        <text class="txt">{{ form.commentCount }}</text>
       </view>
     </view>
   </view>
@@ -47,11 +53,23 @@ export default {
     };
   },
   onLoad() {},
-  computed: {},
+  computed: {
+    userId() {
+      return uni.getStorageSync('userInfo').id;
+    },
+  },
   methods: {
-    onComment(){
-      this.$emit('comment',null,false)
-    }
+    onComment() {
+      this.$emit('comment', null, false);
+    },
+    // 点赞
+    onLike() {
+      this.$emit('like');
+    },
+    // 收藏
+    onCollect() {
+      this.$emit('collect');
+    },
   },
 };
 </script>
@@ -106,7 +124,7 @@ export default {
         color: #333;
       }
     }
-    .items:last-child{
+    .items:last-child {
       margin-right: 0;
     }
   }

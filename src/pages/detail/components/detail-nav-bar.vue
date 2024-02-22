@@ -17,7 +17,12 @@
             <text class="name">{{ form.name }}</text>
           </view>
 
-          <view class="follow">关注</view>
+          <view
+            :class="form.isFollow ? 'follow-active' : 'follow'"
+            v-if="form.userId !== userId"
+            @tap="onFollow"
+            >{{ form.isFollow ? '已关注' : '关注' }}</view
+          >
         </view>
       </view>
     </view>
@@ -25,7 +30,7 @@
 </template>
 
 <script>
-import backIcon from "@/static/svg/back.svg";
+import backIcon from '@/static/svg/back.svg';
 export default {
   props: {
     top: {
@@ -41,8 +46,6 @@ export default {
       barHeight: 44,
       barWidth: null,
       opacity: 1,
-      avatar:
-        "https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp",
     };
   },
   watch: {
@@ -50,9 +53,17 @@ export default {
       this.opacity = 1 - `${v / 100}`;
     },
   },
+  computed: {
+    userId() {
+      return uni.getStorageSync('userInfo').id;
+    },
+  },
   methods: {
     onBack() {
       uni.navigateBack();
+    },
+    onFollow() {
+      this.$emit('follow');
     },
   },
   mounted() {
@@ -62,7 +73,7 @@ export default {
       success: function (res) {
         // console.log(res)
         that.statusBarHeight = res.statusBarHeight; //手机状态栏高度
-        let isiOS = res.system.indexOf("iOS") > -1; //是否为iOS系统
+        let isiOS = res.system.indexOf('iOS') > -1; //是否为iOS系统
         that.barHeight = !isiOS ? 48 : 44; //导航栏高度，iOS：48，Android：44
         that.barWidth = res.windowWidth - 87; //nabbar可操作宽度 = 屏幕宽度 - 小程序右上角的胶囊宽度（87）
       },
@@ -122,6 +133,14 @@ export default {
         color: #c95552;
         font-size: 24rpx;
         border: 1px solid #c95552;
+        padding: 4rpx 15rpx;
+        border-radius: 60rpx;
+        margin-right: 20rpx;
+      }
+      .follow-active {
+        color: #a1a1a1;
+        font-size: 24rpx;
+        border: 1px solid #bbbbbb;
         padding: 4rpx 15rpx;
         border-radius: 60rpx;
         margin-right: 20rpx;

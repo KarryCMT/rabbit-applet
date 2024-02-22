@@ -2,24 +2,25 @@
   <!-- 我的 -->
   <view class="dg-follow-container">
     <view class="title-box">
-      <text class="follows">我的关注（9）</text>
+      <text class="follows">我的关注（{{ list.length }}）</text>
       <view class="right">
         <text class="sort">排序</text>
         <image class="icon" :src="sortIcon"></image>
       </view>
     </view>
-    <view class="list-box">
+    <view class="list-box" v-if="list.length">
       <view class="items" v-for="item in list" :key="item.id">
-        <image class="cover" :src="item.url"></image>
+        <image class="cover" :src="item.avatar"></image>
         <view class="content">
           <text class="name">{{ item.name }}</text>
           <text class="desc">{{ item.desc }}</text>
         </view>
-        <view class="btn">
+        <view class="btn" @click="() => onCancelFollow(item)">
           <view class="box">已关注</view>
         </view>
       </view>
     </view>
+    <rb-empty v-else />
   </view>
 </template>
 
@@ -31,91 +32,53 @@ export default {
   data() {
     return {
       sortIcon,
-      list: [
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-        {
-          name: '李同学的啊',
-          desc: '这是描述',
-          url: 'https://i0.hdslb.com/bfs/face/fef46d61fefa684aff591c4648a899a81a5fc092.jpg@240w_240h_1c_1s_!web-avatar-nav.webp',
-        },
-      ],
+      list: [],
+      searchForm: {
+        pageNum: 1,
+        pageSize: 10,
+      },
     };
   },
-  methods: {},
+  computed: {
+    userId() {
+      return uni.getStorageSync('userInfo').id;
+    },
+  },
+  created() {
+    this.onLoadData();
+  },
+  methods: {
+    // 取消关注
+    onCancelFollow(row) {
+      uni.showModal({
+        title: '提示',
+        content: '确定取消关注该用户么？',
+        success: (res) => {
+          if (res.confirm) {
+            const url = 'dragon.follow.cancel';
+            this.$request(url, {
+              data: {
+                followedId: row.followedId,
+                userId: this.userId,
+              },
+            }).then((res) => {
+              this.onLoadData();
+            });
+          } else if (res.cancel) {
+            console.log('用户点击取消');
+          }
+        },
+      });
+    },
+    // 加载数据
+    onLoadData() {
+      this.$request('dragon.follow.page', {
+        data: { ...this.searchForm, userId: this.userId },
+      }).then((res) => {
+        this.list = res.data.list;
+      });
+    },
+  },
 };
 </script>
 
@@ -145,8 +108,8 @@ export default {
         color: #646464;
       }
     }
-    .right:active{
-      opacity: .5;
+    .right:active {
+      opacity: 0.5;
     }
   }
   .list-box {
@@ -188,8 +151,8 @@ export default {
           font-size: 28rpx;
           border-radius: 50rpx;
         }
-        .box:active{
-          opacity: .5;
+        .box:active {
+          opacity: 0.5;
         }
       }
     }

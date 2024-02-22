@@ -1,7 +1,7 @@
 <template>
   <view class="detail-comment-box">
     <view class="comment-main-box">
-      <view class="count">共 {{ commentList.length }} 条评论</view>
+      <view class="count">共 {{ form.commentCount }} 条评论</view>
       <view class="master-box">
         <image class="avatar" :src="avatar"></image>
         <view class="input" @tap="onComment">
