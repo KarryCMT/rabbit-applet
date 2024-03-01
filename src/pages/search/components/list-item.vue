@@ -4,11 +4,11 @@
     <view class="content">
       <view class="title" v-html="highlightContent"></view>
       <view class="other">
-        <text>{{ formatTime(form.time) }}</text>
+        <text>{{ formatTime(form.createTime) }}</text>
         <text>{{ form.commentCount }}评</text>
       </view>
     </view>
-    <image class="cover" :src="form.url" />
+    <image class="cover" :src="form.cover" />
   </view>
 </template>
 
@@ -44,8 +44,9 @@ export default {
   methods: {
     formatTime,
     onDetail(){
+      const id = this.form.id
       uni.navigateTo({
-        url:'/pages/detail/index'
+        url:`/pages/detail/index?id=${id}`
       })
     }
   },

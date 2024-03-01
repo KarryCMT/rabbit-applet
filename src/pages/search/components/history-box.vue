@@ -6,7 +6,12 @@
       <text class="clear">清空</text>
     </view>
     <view class="list-box">
-      <view class="items" v-for="item in historyList">{{ item }}</view>
+      <view
+        @click="() => onSearch(item)"
+        class="items"
+        v-for="item in historyList"
+        >{{ item }}</view
+      >
     </view>
   </view>
 </template>
@@ -21,7 +26,11 @@ export default {
       historyList: ['二手交易', '情感之家', '电脑', 'Apple', '手机'],
     };
   },
-  methods: {},
+  methods: {
+    onSearch(row) {
+      this.$emit('search', row);
+    },
+  },
 };
 </script>
 
@@ -34,8 +43,8 @@ export default {
     align-items: center;
     font-size: 26rpx;
     justify-content: space-between;
-    .clear{
-        color: #d6938e;
+    .clear {
+      color: #d6938e;
     }
   }
   .list-box {
